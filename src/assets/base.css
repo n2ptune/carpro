@@ -1,0 +1,4 @@
+html,
+body {
+  @apply bg-white dark:bg-zinc-800 min-h-screen;
+}

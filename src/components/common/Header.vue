@@ -3,11 +3,14 @@ const { $firebaseApp } = useNuxtApp()
 const colorMode = useColorMode()
 
 const iconName = computed(() => {
-  return colorMode.preference === 'dark' ? 'i-heroicons-sun' : 'i-heroicons-moon-solid'
+  return colorMode.value === 'dark'
+    ? 'i-heroicons-sun'
+    : 'i-heroicons-moon-solid'
 })
 
 function onClickChangePreference() {
-  colorMode.value = colorMode.value === 'light' ? 'dark' : 'light'
+  colorMode.value =
+    colorMode.value === 'light' ? 'dark' : 'light'
   colorMode.preference = colorMode.value
 }
 </script>
@@ -18,16 +21,17 @@ function onClickChangePreference() {
       <div class="text-2xl font-black">
         {{ 'CARPRO' }}
       </div>
-      <div class="space-x-4">
+      <div>
         <ClientOnly>
           <UButton
             :icon="iconName"
             sqaure
             variant="link"
-            size="xl"
+            size="md"
             color="black"
             @click="onClickChangePreference"
           />
+          <AuthPopover />
         </ClientOnly>
       </div>
     </div>
