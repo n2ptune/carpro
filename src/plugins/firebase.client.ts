@@ -1,5 +1,6 @@
 import { initializeApp, getApps } from 'firebase/app'
 import type { FirebaseApp } from 'firebase/app'
+import { getAuth, onAuthStateChanged } from 'firebase/auth'
 import { useFbStore } from '~/store/fb'
 
 export default defineNuxtPlugin((nuxtApp) => {
@@ -24,4 +25,8 @@ export default defineNuxtPlugin((nuxtApp) => {
 
   const fbStore = useFbStore()
   fbStore.$patch({ fbAppLoaded: true })
+
+  onAuthStateChanged(getAuth(app), (observer) => {
+    console.log(observer)
+  })
 })
