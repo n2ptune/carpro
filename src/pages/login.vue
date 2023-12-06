@@ -2,7 +2,7 @@
 import { useUserStore } from '~/store/user'
 
 definePageMeta({
-  layout: 'default'
+  layout: 'authentication'
 })
 
 const { loggedIn, authenticating } = useUserStore()
@@ -19,5 +19,5 @@ watch(
 </script>
 
 <template>
-  <div>Login Form</div>
+  <AuthLoginForm />
 </template>

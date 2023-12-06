@@ -2,9 +2,14 @@
 export default {
   content: [],
   theme: {
-    extend: {},
+    extend: {
+      container: {
+        screens: {
+          '2xl': '1280px'
+        }
+      }
+    }
   },
   plugins: [],
   darkMode: 'class'
 }
-
