@@ -11,9 +11,12 @@ const router = useRouter()
 watch(
   () => [loggedIn, authenticating],
   (n, o) => {
-    if (loggedIn && authenticating) {
+    if (loggedIn && !authenticating) {
       router.push('/')
     }
+  },
+  {
+    immediate: true
   }
 )
 </script>

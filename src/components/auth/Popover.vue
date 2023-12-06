@@ -7,16 +7,23 @@ const router = useRouter()
 function onClickRouteToLogin() {
   return router.push({ path: '/login' })
 }
+
+function onClickRouteToMyPage() {
+  return router.push({ path: '/my' })
+}
 </script>
 
 <template>
   <UButton
-    v-if="!loggedIn && !authenticating"
     icon="i-heroicons-user-circle"
     sqaure
     size="md"
     variant="link"
     color="black"
-    @click="onClickRouteToLogin"
+    @click="
+      !loggedIn && !authenticating
+        ? onClickRouteToLogin()
+        : onClickRouteToMyPage()
+    "
   />
 </template>

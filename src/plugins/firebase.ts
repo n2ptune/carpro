@@ -1,7 +1,8 @@
 import { initializeApp, getApps } from 'firebase/app'
 import type { FirebaseApp } from 'firebase/app'
-import { getAuth, onAuthStateChanged } from 'firebase/auth'
+import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth'
 import { useFbStore } from '~/store/fb'
+import { useUserStore } from '~/store/user'
 
 export default defineNuxtPlugin((nuxtApp) => {
   let app: FirebaseApp
@@ -24,9 +25,31 @@ export default defineNuxtPlugin((nuxtApp) => {
   nuxtApp.vueApp.provide('firebaseApp', app)
 
   const fbStore = useFbStore()
+  const userStore = useUserStore()
+  const auth = getAuth(app)
   fbStore.$patch({ fbAppLoaded: true })
 
-  onAuthStateChanged(getAuth(app), (observer) => {
-    console.log(observer)
+  onAuthStateChanged(auth, (user) => {
+    // 서버사이드 인증 불필요
+    if (process.server) return
+    // 인증 정보 삭제된 경우 유저 스토어 초기화
+    // 로컬 스토리지에 있는 인증 대기 상태도 초기화
+    if (!user) {
+      userStore.$reset()
+      localStorage.removeItem('fb_auth_waiting')
+      return
+    }
+    // 인증 정보 유저 스토어에 저장하고 로컬 스토리지에 인증 대기 상태 추가
+    userStore.$patch({
+      authenticating: false,
+      loggedIn: true,
+      fbUser: user,
+      user: {
+        email: user.email || '',
+        photoUrl: user.photoURL || '',
+        uid: user.uid
+      }
+    })
+    localStorage.setItem('fb_auth_waiting', '1')
   })
 })
