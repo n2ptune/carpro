@@ -1,6 +1,6 @@
 import type { User as FirebaseUser } from 'firebase/auth'
 import type { CarProUser } from '../store/user'
-import { createUser, getStore, isExistUserByUid } from './store'
+import { createUser, isExistUserByUid } from './store'
 
 export async function checkInStoreUser(user: FirebaseUser): Promise<boolean> {
   const result = await isExistUserByUid(user.uid)

@@ -12,18 +12,12 @@ import type { User as FirebaseUser } from 'firebase/auth'
 import { useNuxtApp } from 'nuxt/app'
 import type { CarProUser } from '~/store/user'
 
-export function getStore() {
+/**
+ * @private
+ */
+function getStore() {
   const nuxtApp = useNuxtApp()
   return getFirestore(nuxtApp.$firebaseApp as FirebaseApp)
-}
-
-export async function isExistUserByUid(uid: string) {
-  const store = getStore()
-  const userRef = collection(store, 'users')
-  const q = query(userRef, where('uid', '==', uid))
-  const qs = await getDocs(q)
-
-  return !qs.empty
 }
 
 /**
@@ -40,6 +34,15 @@ async function getUser(content: string, type: 'uid' | 'email') {
   } else {
     return qs.docs[0].data()
   }
+}
+
+export async function isExistUserByUid(uid: string) {
+  const store = getStore()
+  const userRef = collection(store, 'users')
+  const q = query(userRef, where('uid', '==', uid))
+  const qs = await getDocs(q)
+
+  return !qs.empty
 }
 
 export async function getUserByUid(uid: string) {
