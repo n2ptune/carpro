@@ -4,8 +4,6 @@ definePageMeta({
   name: 'my-page',
   breadcrumbsLabel: '내 프로필 관리'
 })
-
-const route = useRoute()
 </script>
 
 <template>
