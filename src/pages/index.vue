@@ -1,4 +1,9 @@
 <script setup lang="ts">
+definePageMeta({
+  name: 'home',
+  breadcrumbsLabel: ''
+})
+
 const route = useRoute()
 </script>
 
@@ -6,6 +11,8 @@ const route = useRoute()
   <div>
     <h1>Nuxt Routing set up successfully!</h1>
     <p>Current route: {{ route.path }}</p>
-    <a href="https://nuxt.com/docs/getting-started/routing" target="_blank">Learn more about Nuxt Routing</a>
+    <a href="https://nuxt.com/docs/getting-started/routing" target="_blank"
+      >Learn more about Nuxt Routing</a
+    >
   </div>
 </template>

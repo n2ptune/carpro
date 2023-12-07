@@ -6,24 +6,18 @@ import { useUserStore } from '~/store/user'
 const { $firebaseApp } = useNuxtApp()
 const fbStore = useFbStore()
 const userStore = useUserStore()
+const router = useRouter()
 
 const onClickAuthButton = () => {
   if (!fbStore.fbAppLoaded) return
+  if (userStore.loggedIn) return
 
   const auth = getAuth($firebaseApp)
   const provider = new GoogleAuthProvider()
 
-  userStore.$patch({
-    authenticating: true,
-    fbUser: null,
-    fbUserCredential: null,
-    loggedIn: false,
-    user: null
-  })
-
   signInWithPopup(auth, provider)
-    .then((credential) => {
-      console.log(credential)
+    .then((_) => {
+      router.push({ name: 'my-page' })
     })
     .catch((err) => {
       console.log(err)

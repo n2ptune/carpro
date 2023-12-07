@@ -22,6 +22,7 @@ const onClickAuthButton = () => {
 
 <template>
   <UButton
+    :loading="authenticating"
     :color="$colorMode.value === 'light' ? 'white' : 'black'"
     block
     size="xl"

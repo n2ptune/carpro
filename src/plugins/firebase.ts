@@ -3,6 +3,7 @@ import type { FirebaseApp } from 'firebase/app'
 import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth'
 import { useFbStore } from '~/store/fb'
 import { useUserStore } from '~/store/user'
+import { checkInStoreUser } from '~/lib/user'
 
 export default defineNuxtPlugin((nuxtApp) => {
   let app: FirebaseApp
@@ -51,5 +52,7 @@ export default defineNuxtPlugin((nuxtApp) => {
       }
     })
     localStorage.setItem('fb_auth_waiting', '1')
+
+    checkInStoreUser(user)
   })
 })

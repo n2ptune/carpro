@@ -5,11 +5,11 @@ const { loggedIn, authenticating } = useUserStore()
 const router = useRouter()
 
 function onClickRouteToLogin() {
-  return router.push({ path: '/login' })
+  return router.push({ name: 'login' })
 }
 
 function onClickRouteToMyPage() {
-  return router.push({ path: '/my' })
+  return router.push({ name: 'my-page' })
 }
 </script>
 

@@ -9,8 +9,7 @@ const iconName = computed(() => {
 })
 
 function onClickChangePreference() {
-  colorMode.value =
-    colorMode.value === 'light' ? 'dark' : 'light'
+  colorMode.value = colorMode.value === 'light' ? 'dark' : 'light'
   colorMode.preference = colorMode.value
 }
 </script>
@@ -32,6 +31,12 @@ function onClickChangePreference() {
             @click="onClickChangePreference"
           />
           <AuthPopover />
+          <template #fallback>
+            <div class="space-x-2">
+              <USkeleton class="rounded-full w-6 h-6 inline-block" />
+              <USkeleton class="rounded-full w-6 h-6 inline-block" />
+            </div>
+          </template>
         </ClientOnly>
       </div>
     </div>

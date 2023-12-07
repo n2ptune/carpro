@@ -2,7 +2,8 @@
 import { useUserStore } from '~/store/user'
 
 definePageMeta({
-  layout: 'authentication'
+  layout: 'authentication',
+  name: 'login'
 })
 
 const { loggedIn, authenticating } = useUserStore()
