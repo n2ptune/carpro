@@ -1,7 +1,11 @@
 <script setup lang="ts">
+import { useTabs } from '~/hooks/tabs'
+
 interface FormUser {
   name: string // 이름
 }
+
+const { tabs } = useTabs()
 </script>
 
 <template>
