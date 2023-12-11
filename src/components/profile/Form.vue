@@ -6,7 +6,7 @@ interface FormUser {
   name: string // 이름
 }
 
-const { tabs } = useTabs()
+const { tabs, onActiveTab, activeTab } = useTabs()
 const { userProfile, loading: isLoadingProfile } = useUserProfile()
 </script>
 
@@ -17,12 +17,17 @@ const { userProfile, loading: isLoadingProfile } = useUserProfile()
         <h3
           class="text-lg font-bold text-ellipsis whitespace-nowrap overflow-hidden"
         >
-          기본 정보
+          프로필
         </h3>
-        <ProfileBasicUserInfo />
+        <ProfileBasicUserInfo
+          :email="userProfile?.email"
+          :name="userProfile?.name"
+          :photo-url="userProfile?.userPhotoUrl"
+        />
+        <ProfileTabMenu :tabs="tabs" @change="onActiveTab" />
       </div>
       <div>
-        <h3 class="text-lg font-bold">asdf</h3>
+        <h3 class="text-lg font-bold">{{ activeTab?.name }}</h3>
       </div>
     </div>
   </div>

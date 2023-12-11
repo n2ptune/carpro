@@ -1,21 +1,24 @@
-type TabField = 'basic-information' | 'work-experience'
+export type TabField = 'basic-information' | 'work-experience'
 
-type Tab = {
+export type Tab = {
   name: string
   active: boolean
   field: TabField
+  icon: string
 }
 
 const defaultTabs: Tab[] = [
   {
     name: '기본 정보',
     active: true,
-    field: 'basic-information'
+    field: 'basic-information',
+    icon: 'i-heroicons-document-text'
   },
   {
-    name: '기본 정보',
+    name: '경력',
     active: false,
-    field: 'work-experience'
+    field: 'work-experience',
+    icon: 'i-heroicons-square-3-stack-3d'
   }
 ]
 

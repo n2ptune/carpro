@@ -23,10 +23,11 @@ declare global {
   }
 
   interface UserProfile {
-    name: string
-    email: string
+    name?: string
+    email?: string
     userUid: string
     uid: string
+    userPhotoUrl?: string
     [key: string]: any
   }
 }
