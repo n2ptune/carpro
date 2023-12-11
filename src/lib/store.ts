@@ -8,14 +8,12 @@ import {
   where
 } from 'firebase/firestore'
 import type { FirebaseApp } from 'firebase/app'
-import type { User as FirebaseUser } from 'firebase/auth'
 import { useNuxtApp } from 'nuxt/app'
-import type { CarProUser } from '~/store/user'
 
 /**
- * @private
+ * @public
  */
-function getStore() {
+export function getStore() {
   const nuxtApp = useNuxtApp()
   return getFirestore(nuxtApp.$firebaseApp as FirebaseApp)
 }
@@ -54,7 +52,7 @@ export async function getUserByEmail(email: string) {
 }
 
 export async function createUser(user: FirebaseUser) {
-  const creatingUser: CarProUser = {
+  const creatingUser: User = {
     email: user.email || '',
     uid: user.uid,
     photoUrl: user.photoURL || ''

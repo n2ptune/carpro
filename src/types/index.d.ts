@@ -1,4 +1,5 @@
 import type { FirebaseApp } from 'firebase/app'
+import type { User as _FirebaseUser } from 'firebase/auth'
 
 declare module '#app' {
   interface NuxtApp {
@@ -9,6 +10,24 @@ declare module '#app' {
 declare module 'vue' {
   interface ComponentCustomProperties {
     $firebaseApp: FirebaseApp
+  }
+}
+
+declare global {
+  type FirebaseUser = _FirebaseUser
+
+  interface User {
+    email: string
+    uid: string
+    photoUrl?: string
+  }
+
+  interface UserProfile {
+    name: string
+    email: string
+    userUid: string
+    uid: string
+    [key: string]: any
   }
 }
 

@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { useUserProfile } from '~/hooks/profiles'
 import { useTabs } from '~/hooks/tabs'
 
 interface FormUser {
@@ -6,6 +7,7 @@ interface FormUser {
 }
 
 const { tabs } = useTabs()
+const { userProfile, loading: isLoadingProfile } = useUserProfile()
 </script>
 
 <template>
@@ -17,6 +19,7 @@ const { tabs } = useTabs()
         >
           기본 정보
         </h3>
+        <ProfileBasicUserInfo />
       </div>
       <div>
         <h3 class="text-lg font-bold">asdf</h3>
