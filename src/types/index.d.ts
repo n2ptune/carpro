@@ -28,6 +28,9 @@ declare global {
     userUid: string
     uid: string
     userPhotoUrl?: string
+    templateName?: string
+    position?: string
+    intro?: string
     [key: string]: any
   }
 }

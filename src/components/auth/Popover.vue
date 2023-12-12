@@ -18,8 +18,8 @@ function onClickRouteToMyPage() {
     icon="i-heroicons-user-circle"
     sqaure
     size="md"
-    variant="link"
-    color="black"
+    variant="ghost"
+    color="gray"
     @click="
       !loggedIn && !authenticating
         ? onClickRouteToLogin()

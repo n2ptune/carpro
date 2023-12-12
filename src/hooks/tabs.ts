@@ -15,7 +15,7 @@ const defaultTabs: Tab[] = [
     icon: 'i-heroicons-document-text'
   },
   {
-    name: '경력',
+    name: '경력 사항 (Work Experience)',
     active: false,
     field: 'work-experience',
     icon: 'i-heroicons-square-3-stack-3d'
@@ -24,7 +24,7 @@ const defaultTabs: Tab[] = [
 
 export function useTabs() {
   const tabs = reactive(defaultTabs)
-  const activeTab = computed(() => tabs.find((tab) => tab.active))
+  const activeTab = computed(() => tabs.find((tab) => tab.active) as Tab)
 
   const onActiveTab = (field: TabField) => {
     tabs.forEach((tab) => (tab.active = false))

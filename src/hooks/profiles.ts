@@ -1,10 +1,14 @@
 import { getUserProfile } from '~/lib/profile'
 import { useUserStore } from '~/store/user'
 
+export const profileSymbol = Symbol()
+
 export function useUserProfile() {
   const userStore = useUserStore()
   const loading = ref(false)
   const userProfile = ref<UserProfile | null>(null)
+
+  provide(profileSymbol, userProfile)
 
   watch(
     () => userStore.fbUser,

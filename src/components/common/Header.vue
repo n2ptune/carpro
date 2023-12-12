@@ -25,9 +25,9 @@ function onClickChangePreference() {
           <UButton
             :icon="iconName"
             sqaure
-            variant="link"
+            variant="ghost"
             size="md"
-            color="black"
+            color="gray"
             @click="onClickChangePreference"
           />
           <AuthPopover />
