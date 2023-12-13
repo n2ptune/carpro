@@ -3,15 +3,19 @@ import { useFbStore } from '~/store/fb'
 import { useUserStore } from '~/store/user'
 
 const router = useRouter()
-const { fbAppLoaded } = useFbStore()
+const fbStore = useFbStore()
 const userStore = useUserStore()
 
 watch(
-  () => [fbAppLoaded, userStore.authenticating, userStore.loggedIn],
+  () => [fbStore.fbAppLoaded, userStore.authenticating, userStore.loggedIn],
   (_values, _oldValues) => {
     if (process.server) return
 
-    if (fbAppLoaded && !userStore.authenticating && !userStore.loggedIn) {
+    if (
+      fbStore.fbAppLoaded &&
+      !userStore.authenticating &&
+      !userStore.loggedIn
+    ) {
       return router.push({ name: 'login' })
     }
   },

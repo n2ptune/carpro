@@ -6,8 +6,9 @@ interface Props {
   disabled: boolean
 }
 
-const { fbAppLoaded } = useFbStore()
-const { authenticating } = useUserStore()
+const fbStore = useFbStore()
+const userStore = useUserStore()
+const { authenticating } = storeToRefs(userStore)
 
 const emit = defineEmits<{
   click: []
@@ -27,7 +28,7 @@ const onClickAuthButton = () => {
     block
     size="xl"
     :trailing="false"
-    :disabled="props.disabled || !fbAppLoaded || authenticating"
+    :disabled="props.disabled || !fbStore.fbAppLoaded || authenticating"
     @click="onClickAuthButton"
   >
     <Icon name="logos:google-icon" />Continue with Google

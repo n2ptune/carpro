@@ -48,7 +48,7 @@ const onClickSaveProfile = () => {
   <div class="w-full rounded py-2 px-4 lg:py-4 lg:px-8 area">
     <div
       v-if="!isLoadingProfile && userProfile"
-      class="block lg:g`rid lg:grid-cols-[300px_1fr] lg:gap-12"
+      class="block lg:grid lg:grid-cols-[300px_1fr] lg:gap-12"
     >
       <div class="mb-5 lg:mb-0">
         <h3

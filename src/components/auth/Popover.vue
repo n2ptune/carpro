@@ -1,7 +1,8 @@
 <script lang="ts" setup>
 import { useUserStore } from '~/store/user'
 
-const { loggedIn, authenticating } = useUserStore()
+const userStore = useUserStore()
+const { loggedIn, authenticating } = storeToRefs(userStore)
 const router = useRouter()
 
 function onClickRouteToLogin() {

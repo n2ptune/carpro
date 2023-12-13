@@ -6,19 +6,18 @@ definePageMeta({
   name: 'login'
 })
 
-const { loggedIn, authenticating } = useUserStore()
+const userStore = useUserStore()
+const { loggedIn, authenticating } = storeToRefs(userStore)
 const router = useRouter()
 
 watch(
-  () => [loggedIn, authenticating],
-  (n, o) => {
-    if (loggedIn && !authenticating) {
+  () => [loggedIn.value, authenticating.value],
+  () => {
+    if (loggedIn.value && !authenticating.value) {
       router.push('/')
     }
   },
-  {
-    immediate: true
-  }
+  { immediate: true }
 )
 </script>
 
