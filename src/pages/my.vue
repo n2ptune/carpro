@@ -9,5 +9,6 @@ definePageMeta({
 <template>
   <AuthGuard>
     <ProfileForm />
+    <TemplatesMyContainer />
   </AuthGuard>
 </template>
