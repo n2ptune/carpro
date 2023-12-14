@@ -24,6 +24,5 @@ defineExpose({
       icon="i-heroicons-information-circle"
       class="mb-4"
     />
-    <DatePicker />
   </ProfileItemBase>
 </template>
