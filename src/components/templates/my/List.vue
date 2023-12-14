@@ -1,5 +1,9 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { useMyTemplate } from '~/hooks/templates'
+
+const { isLoadingMyTemplate, myTemplates } = useMyTemplate()
+</script>
 
 <template>
-  <div>List</div>
+  <div>{{ myTemplates.length }}</div>
 </template>

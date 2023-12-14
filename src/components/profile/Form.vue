@@ -41,7 +41,12 @@ const onClickSaveProfile = () => {
   })
 
   if (flag) return
+  return true
 }
+
+defineExpose({
+  onClickSaveProfile
+})
 </script>
 
 <template>
@@ -101,7 +106,9 @@ const onClickSaveProfile = () => {
         />
       </div>
     </div>
-    <div class="flex justify-center space-x-2 mt-2 lg:mt-4">
+    <div
+      class="flex justify-center space-x-2 mt-2 lg:mt-4 pt-2 lg:pt-4 border-t border-gray-200 dark:border-gray-700"
+    >
       <UButton
         variant="solid"
         size="lg"

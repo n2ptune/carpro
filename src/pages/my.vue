@@ -4,11 +4,13 @@ definePageMeta({
   name: 'my-page',
   breadcrumbsLabel: '내 프로필 관리'
 })
+
+const formRef = ref<any>(null)
 </script>
 
 <template>
   <AuthGuard>
-    <ProfileForm />
-    <TemplatesMyContainer />
+    <ProfileForm ref="formRef" />
+    <TemplatesMyContainer :form-ref="formRef" />
   </AuthGuard>
 </template>

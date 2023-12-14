@@ -2,12 +2,13 @@
 import { useBreadcrumbsStore } from '~/store/breadcrumbs'
 
 const route = useRoute()
-const { canDisplayBreadcrumbs, label, setBreadcrumbs } = useBreadcrumbsStore()
+const breadcrumbsStore = useBreadcrumbsStore()
+const { canDisplayBreadcrumbs, label } = storeToRefs(breadcrumbsStore)
 
 watch(
   () => route.path,
   (_n, _o) => {
-    setBreadcrumbs(route.meta.breadcrumbsLabel as string)
+    breadcrumbsStore.setBreadcrumbs(route.meta.breadcrumbsLabel as string)
   },
   { immediate: true }
 )

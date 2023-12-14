@@ -33,6 +33,22 @@ declare global {
     intro?: string
     [key: string]: any
   }
+
+  type TemplateType = 'standard' | 'basic'
+
+  type TemplateMeta = {
+    supported: boolean // 지원 여부
+    name: string
+    type: TemplateType
+    theme: 'light' | 'dark'
+  }
+
+  type Template = {
+    uid: string
+    userUid: string
+    createdAt: number
+    isDeleted: boolean
+  } & Pick<TemplateMeta, 'type' | 'theme'>
 }
 
 export {}
