@@ -16,16 +16,17 @@ function onClickChangePreference() {
 
 <template>
   <header class="p-4">
-    <div class="container mx-auto flex justify-between">
+    <div class="container mx-auto flex justify-between items-center">
       <div class="text-2xl font-black">
         {{ 'CARPRO' }}
       </div>
-      <div>
+      <div class="space-x-2">
         <ClientOnly>
           <UButton
             :icon="iconName"
             sqaure
             variant="ghost"
+            :padded="false"
             size="md"
             color="gray"
             @click="onClickChangePreference"

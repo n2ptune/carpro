@@ -15,16 +15,18 @@ function onClickRouteToMyPage() {
 </script>
 
 <template>
-  <UButton
-    icon="i-heroicons-user-circle"
-    sqaure
-    size="md"
-    variant="ghost"
-    color="gray"
-    @click="
-      !loggedIn && !authenticating
-        ? onClickRouteToLogin()
-        : onClickRouteToMyPage()
-    "
-  />
+  <UChip :show="loggedIn">
+    <UButton
+      icon="i-heroicons-user-circle"
+      sqaure
+      :padded="false"
+      variant="ghost"
+      color="gray"
+      @click="
+        !loggedIn && !authenticating
+          ? onClickRouteToLogin()
+          : onClickRouteToMyPage()
+      "
+    />
+  </UChip>
 </template>

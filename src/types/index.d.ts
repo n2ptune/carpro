@@ -31,6 +31,7 @@ declare global {
     templateName?: string
     position?: string
     intro?: string
+    workItem?: WorkItem[]
     [key: string]: any
   }
 
@@ -49,6 +50,19 @@ declare global {
     createdAt: number
     isDeleted: boolean
   } & Pick<TemplateMeta, 'type' | 'theme'>
+
+  type WorkItemChild = {
+    text: string
+  }
+
+  type WorkItem = {
+    startDate: number
+    endDate?: number
+    companyName: string
+    isCurrently: boolean
+    description: string
+    children: WorkItemChild[]
+  }
 }
 
 export {}

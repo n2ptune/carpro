@@ -3,12 +3,11 @@
 import { DatePicker as VCalendarDatePicker } from 'v-calendar'
 import 'v-calendar/dist/style.css'
 
-const props = defineProps({
-  modelValue: {
-    type: Date,
-    default: null
-  }
-})
+interface Props {
+  modelValue: Date | null
+}
+
+const props = defineProps<Props>()
 
 const emit = defineEmits(['update:model-value', 'close'])
 
