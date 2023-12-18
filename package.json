@@ -27,6 +27,8 @@
     "v-calendar": "^3.1.2"
   },
   "overrides": {
-    "rollup": "npm:@rollup/wasm-node"
+    "vite": {
+      "rollup": "npm:@rollup/wasm-node"
+    }
   }
 }
