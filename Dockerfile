@@ -2,7 +2,7 @@
 
 ARG NODE_VERSION=18.18.2
 
-FROM node:${NODE_VERSION}-alpine as base
+FROM node:${NODE_VERSION} as base
 
 ARG PORT=40509
 
