@@ -20,18 +20,18 @@ function onClickChangePreference() {
       <div class="text-2xl font-black">
         {{ 'CARPRO' }}
       </div>
-      <div class="space-x-2">
+      <div class="space-x-3">
         <ClientOnly>
           <UButton
             :icon="iconName"
             sqaure
             variant="ghost"
             :padded="false"
-            size="md"
+            size="xl"
             color="gray"
             @click="onClickChangePreference"
           />
-          <AuthPopover />
+          <AuthProfile />
           <template #fallback>
             <div class="space-x-2">
               <USkeleton class="rounded-full w-6 h-6 inline-block" />

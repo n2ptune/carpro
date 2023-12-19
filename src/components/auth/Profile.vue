@@ -19,6 +19,7 @@ function onClickRouteToMyPage() {
     <UButton
       icon="i-heroicons-user-circle"
       sqaure
+      size="xl"
       :padded="false"
       variant="ghost"
       color="gray"
