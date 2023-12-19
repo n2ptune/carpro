@@ -1,4 +1,3 @@
-import type { NuxtError } from 'nuxt/app'
 import { getUserTemplates, getTemplate as getLibTemplate } from '~/lib/template'
 import { useUserStore } from '~/store/user'
 
@@ -41,51 +40,75 @@ const templates: TemplateMeta[] = [
   }
 ]
 
-// export function useTemplate(): TemplateHook {
-//   const route = useRoute()
-//   const router = useRouter()
-//   const isLoadingTemplate = ref(false)
-//   const templateData = ref<Template | null>(null)
-//   const toast = useToast()
+export async function useTemplate(): Promise<TemplateHook> {
+  const route = useRoute()
+  const isLoadingTemplate = ref(false)
+  const templateData = ref<Template | null>(null)
 
-//   if (!route.params.slug) {
-//     router.replace({ name: 'Error' })
-//     return { isLoadingTemplate, templates, templateData }
-//   }
+  if (!route.params.slug) {
+    throw createError({
+      fatal: true,
+      message: '템플릿이 존재하지 않습니다.',
+      statusCode: 400
+    })
+  }
 
-//   async function getTemplate() {
-//     clearError()
-//     isLoadingTemplate.value = true
+  async function getTemplate() {
+    clearError()
+    isLoadingTemplate.value = true
 
-//     try {
-//       const template = await getLibTemplate(route.params.slug as string)
-//       templateData.value = template
-//       if (!templateData.value)
-//         createError({
-//           statusCode: 404,
-//           message: '템플릿이 없습니다.',
-//           fatal: true
-//         })
-//     } catch (apiError) {
-//       console.log(apiError)
-//       toast.add({ title: '알림', description: '템플릿 조회에 실패하였습니다.' })
-//       throw createError({
-//         message: '템플릿 조회에 실패하였습니다.',
-//         statusCode: 500
-//       })
-//     } finally {
-//       isLoadingTemplate.value = false
-//     }
-//   }
+    try {
+      const template = await getLibTemplate(route.params.slug as string)
+      if (!template) {
+        throw new Error('not-found')
+      }
+      return template
+    } catch (apiError: any) {
+      console.log(apiError)
+      if (apiError?.message === 'not-found') {
+        throw createError({
+          message: '템플릿이 존재하지 않습니다.',
+          statusCode: 404,
+          fatal: true
+        })
+      } else {
+        throw createError({
+          message: '템플릿 조회에 실패하였습니다.',
+          statusCode: 500,
+          fatal: true
+        })
+      }
+    } finally {
+      isLoadingTemplate.value = false
+    }
+  }
 
-//   getTemplate()
+  const { error, data } = await useAsyncData(async () => {
+    try {
+      const result = await getTemplate()
+      return result
+    } catch (error: any) {
+      showError(error)
+    }
+  })
 
-//   return {
-//     templates,
-//     isLoadingTemplate,
-//     templateData
-//   }
-// }
+  if (error.value) {
+    throw createError({
+      statusCode: 404,
+      message: '템플릿이 존재하지 않습니다.'
+    })
+  }
+
+  if (data.value) {
+    templateData.value = data.value
+  }
+
+  return {
+    templates,
+    isLoadingTemplate,
+    templateData
+  }
+}
 
 export function useMyTemplate(): MyTemplateHook {
   const toast = useToast()
