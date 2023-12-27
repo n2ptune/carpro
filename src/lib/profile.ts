@@ -40,7 +40,9 @@ export async function createProfile(user: FirebaseUser): Promise<UserProfile> {
     name: '',
     uid: profileUid,
     userUid: user.uid,
-    userPhotoUrl: ''
+    userPhotoUrl: '',
+    createdAt: Date.now(),
+    updatedAt: null
   }
   await setDoc(doc(profileRef), profile)
   return await getUserProfile(user)

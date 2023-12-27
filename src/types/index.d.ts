@@ -32,6 +32,8 @@ declare global {
     position?: string
     intro?: string
     workItem?: WorkItem[]
+    createdAt: number
+    updatedAt?: number | null
     [key: string]: any
   }
 

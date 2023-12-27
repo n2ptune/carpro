@@ -12,24 +12,29 @@ export function useUserProfile() {
 
   watch(
     () => userStore.fbUser,
-    async (_n, _o) => {
-      if (userStore.fbUser) {
-        try {
-          loading.value = true
-          const profile = await getUserProfile(userStore.fbUser)
-          userProfile.value = profile
-        } catch (err) {
-          console.log(err)
-        } finally {
-          loading.value = false
-        }
-      }
+    (_n, _o) => {
+      refresh()
     },
     { immediate: true }
   )
 
+  async function refresh() {
+    if (userStore.fbUser) {
+      try {
+        loading.value = true
+        const profile = await getUserProfile(userStore.fbUser)
+        userProfile.value = profile
+      } catch (err) {
+        console.log(err)
+      } finally {
+        loading.value = false
+      }
+    }
+  }
+
   return {
     loading,
-    userProfile
+    userProfile,
+    refresh
   }
 }
