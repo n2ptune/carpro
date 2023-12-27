@@ -13,26 +13,30 @@ interface MyTemplateHook {
   refresh: () => Promise<void>
 }
 
-const templates: TemplateMeta[] = [
+export const templates: TemplateMeta[] = [
   {
+    uid: '1',
     name: 'Standard Light',
     supported: true,
     theme: 'light',
     type: 'standard'
   },
   {
+    uid: '2',
     name: 'Standard Dark',
     supported: true,
     theme: 'dark',
     type: 'standard'
   },
   {
+    uid: '3',
     name: 'Basic Light',
     supported: false,
     theme: 'light',
     type: 'basic'
   },
   {
+    uid: '4',
     name: 'Basic Dark',
     supported: false,
     theme: 'dark',

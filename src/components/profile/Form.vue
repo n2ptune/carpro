@@ -9,7 +9,12 @@ type FormExpose = {
 }
 
 const { tabs, onActiveTab, activeTab } = useTabs()
-const { userProfile, loading: isLoadingProfile } = useUserProfile()
+const {
+  userProfile,
+  loading: isLoadingProfile,
+  updating: isUpdatingProfile,
+  updateProfile
+} = useUserProfile()
 const getComponent = (field: TabField) => {
   return {
     'work-experience': WorkExperience,
@@ -40,8 +45,9 @@ const onClickSaveProfile = () => {
     }
   })
 
-  if (flag) return
-  return true
+  if (flag) return false
+
+  updateProfile()
 }
 
 defineExpose({
@@ -86,24 +92,12 @@ defineExpose({
     </div>
     <div v-else class="space-x-4 flex py-4">
       <div class="">
-        <USkeleton
-          class="h-12 w-12 rounded-full"
-          :ui="{ background: 'bg-gray-200 dark:bg-gray-900' }"
-        />
+        <USkeleton class="h-12 w-12 rounded-full" />
       </div>
       <div class="space-y-4">
-        <USkeleton
-          class="h-6 w-[350px]"
-          :ui="{ background: 'bg-gray-200 dark:bg-gray-900' }"
-        />
-        <USkeleton
-          class="h-6 w-[280px]"
-          :ui="{ background: 'bg-gray-200 dark:bg-gray-900' }"
-        />
-        <USkeleton
-          class="h-6 w-[420px]"
-          :ui="{ background: 'bg-gray-200 dark:bg-gray-900' }"
-        />
+        <USkeleton class="h-6 w-[350px]" />
+        <USkeleton class="h-6 w-[280px]" />
+        <USkeleton class="h-6 w-[420px]" />
       </div>
     </div>
     <div
@@ -114,10 +108,20 @@ defineExpose({
         size="lg"
         color="primary"
         @click="onClickSaveProfile"
+        :disabled="isUpdatingProfile"
+        :loading="isUpdatingProfile"
       >
         프로필 저장
       </UButton>
-      <UButton variant="solid" size="lg" color="gray"> 프로필 초기화 </UButton>
+      <UButton
+        variant="solid"
+        size="lg"
+        color="gray"
+        :disabled="isUpdatingProfile"
+        :loading="isUpdatingProfile"
+      >
+        프로필 초기화
+      </UButton>
     </div>
   </div>
 </template>

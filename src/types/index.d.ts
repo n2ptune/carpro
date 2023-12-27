@@ -40,11 +40,16 @@ declare global {
   type TemplateType = 'standard' | 'basic'
 
   type TemplateMeta = {
+    uid: string
     supported: boolean // 지원 여부
     name: string
     type: TemplateType
     theme: 'light' | 'dark'
   }
+
+  type TemplateMetaWithRegister = {
+    registered: boolean
+  } & TemplateMeta
 
   type Template = {
     uid: string

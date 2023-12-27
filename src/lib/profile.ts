@@ -4,6 +4,7 @@ import {
   getDocs,
   query,
   setDoc,
+  updateDoc,
   where
 } from 'firebase/firestore'
 import { getStore } from './store'
@@ -18,15 +19,28 @@ import { genUid } from './uid'
 //   form: UserProfile
 // ): Promise<boolean>
 
-// /**
-//  * 유저 프로필 수정
-//  * @todo
-//  */
-// export function updateUserProfile(
-//   profileUid: string,
-//   user: FirebaseUser,
-//   form: UserProfile
-// ): Promise<UserProfile>
+/**
+ * 유저 프로필 수정
+ */
+export async function updateUserProfile(form: UserProfile): Promise<void> {
+  const store = getStore()
+  const profileRef = collection(store, 'profiles')
+  const q = query(profileRef, where('userUid', '==', form.userUid))
+  const qs = await getDocs(q)
+
+  if (qs.empty) throw new Error('Not Found User Profile')
+
+  const doc = qs.docs[0]
+  const docRef = doc.ref
+  const docData = doc.data()
+
+  await updateDoc(docRef, {
+    ...docData,
+    ...form,
+    ...(!docData.createdAt && { createdAt: Date.now() }),
+    updatedAt: Date.now()
+  })
+}
 
 /**
  * 유저 프로필 생성

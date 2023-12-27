@@ -1,9 +1,11 @@
 <script setup lang="ts">
-import { useMyTemplate } from '~/hooks/templates'
+interface Props {
+  templates: Template[]
+}
 
-const { isLoadingMyTemplate, myTemplates } = useMyTemplate()
+const props = defineProps<Props>()
 </script>
 
 <template>
-  <div>{{ myTemplates.length }}</div>
+  <div v-if="templates.length">{{ templates.length }}</div>
 </template>

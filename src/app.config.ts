@@ -19,6 +19,12 @@ export default defineAppConfig({
       default: {
         size: 'md'
       }
+    },
+    skeleton: {
+      background: 'bg-gray-200 dark:bg-gray-900'
+    },
+    card: {
+      divide: 'divide-y divide-gray-100 dark:divide-gray-800'
     }
   }
 })
