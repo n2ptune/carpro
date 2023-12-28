@@ -17,7 +17,7 @@ watch(
 <template>
   <div
     v-if="!!canDisplayBreadcrumbs"
-    class="text-left text-xl lg:text-2xl font-bold my-12"
+    class="text-left text-xl lg:text-2xl font-bold mt-12 mb-8"
   >
     {{ label }}
   </div>

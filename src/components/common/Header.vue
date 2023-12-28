@@ -15,11 +15,11 @@ function onClickChangePreference() {
 </script>
 
 <template>
-  <header class="p-4">
+  <header class="p-4 border-b border-gray-200 dark:border-gray-800">
     <div class="container mx-auto flex justify-between items-center">
-      <div class="text-2xl font-black">
-        {{ 'CARPRO' }}
-      </div>
+      <NuxtLink to="/">
+        <CommonLogoText />
+      </NuxtLink>
       <div class="space-x-3">
         <ClientOnly>
           <UButton
