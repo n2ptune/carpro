@@ -56,6 +56,7 @@ declare global {
     userUid: string
     createdAt: number
     isDeleted: boolean
+    metaUid: string
   } & Pick<TemplateMeta, 'type' | 'theme'>
 
   type WorkItemChild = {

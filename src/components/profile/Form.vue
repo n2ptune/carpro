@@ -92,12 +92,24 @@ defineExpose({
     </div>
     <div v-else class="space-x-4 flex py-4">
       <div class="">
-        <USkeleton class="h-12 w-12 rounded-full" />
+        <USkeleton
+          class="h-12 w-12 rounded-full"
+          :ui="{ background: 'bg-gray-200 dark:bg-gray-900' }"
+        />
       </div>
       <div class="space-y-4">
-        <USkeleton class="h-6 w-[350px]" />
-        <USkeleton class="h-6 w-[280px]" />
-        <USkeleton class="h-6 w-[420px]" />
+        <USkeleton
+          class="h-6 w-[350px]"
+          :ui="{ background: 'bg-gray-200 dark:bg-gray-900' }"
+        />
+        <USkeleton
+          class="h-6 w-[280px]"
+          :ui="{ background: 'bg-gray-200 dark:bg-gray-900' }"
+        />
+        <USkeleton
+          class="h-6 w-[420px]"
+          :ui="{ background: 'bg-gray-200 dark:bg-gray-900' }"
+        />
       </div>
     </div>
     <div

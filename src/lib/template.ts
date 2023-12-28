@@ -1,5 +1,6 @@
-import { collection, getDocs, query, where } from 'firebase/firestore'
+import { addDoc, collection, getDocs, query, where } from 'firebase/firestore'
 import { getStore } from './store'
+import { genUid } from './uid'
 
 /**
  * 내 템플릿 조회
@@ -27,3 +28,34 @@ export async function getTemplate(
   if (qs.empty) return null
   return qs.docs[0].data() as Template
 }
+
+/**
+ * 템플릿 생성
+ */
+export async function createTemplate(
+  userUid: string,
+  template: TemplateMeta
+): Promise<void> {
+  const store = getStore()
+  const templateRef = collection(store, 'templates')
+  const genTemplateUid = genUid()
+
+  await addDoc(templateRef, {
+    uid: genTemplateUid,
+    createdAt: Date.now(),
+    isDeleted: false,
+    userUid,
+    metaUid: template.uid,
+    type: template.type,
+    theme: template.theme
+  })
+}
+
+/**
+ * 템플릿 삭제
+ * @todo
+ */
+export async function deleteTemplate(
+  userUid: string,
+  templateUid: string
+): Promise<void> {}

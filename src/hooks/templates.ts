@@ -1,4 +1,8 @@
-import { getUserTemplates, getTemplate as getLibTemplate } from '~/lib/template'
+import {
+  getUserTemplates,
+  getTemplate as getLibTemplate,
+  createTemplate
+} from '~/lib/template'
 import { useUserStore } from '~/store/user'
 
 interface TemplateHook {
@@ -11,6 +15,7 @@ interface MyTemplateHook {
   myTemplates: Ref<Template[]>
   isLoadingMyTemplate: Ref<boolean>
   refresh: () => Promise<void>
+  registerTemplate: (t: TemplateMetaWithRegister) => Promise<void>
 }
 
 export const templates: TemplateMeta[] = [
@@ -137,11 +142,16 @@ export function useMyTemplate(): MyTemplateHook {
     }
   }
 
+  function registerTemplate(template: TemplateMetaWithRegister) {
+    return createTemplate(user.value?.uid as string, template)
+  }
+
   getMyTemplates()
 
   return {
     isLoadingMyTemplate,
     myTemplates,
-    refresh: getMyTemplates
+    refresh: getMyTemplates,
+    registerTemplate
   }
 }

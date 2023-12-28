@@ -2,7 +2,7 @@
 export default defineNuxtConfig({
   css: ['~/assets/base.css'],
   devtools: { enabled: true },
-  modules: ['@pinia/nuxt', '@nuxt/ui'],
+  modules: ['@pinia/nuxt', '@nuxt/ui', 'dayjs-nuxt'],
   runtimeConfig: {
     public: {
       NUXT_APP_FB_API_KEY: process.env.NUXT_APP_FB_API_KEY,
@@ -15,5 +15,11 @@ export default defineNuxtConfig({
     }
   },
   srcDir: 'src/',
-  tailwindcss: {}
+  tailwindcss: {},
+  dayjs: {
+    locales: ['ko', 'en'],
+    defaultLocale: 'ko',
+    defaultTimezone: 'Asia/Seoul',
+    plugins: ['timezone', 'relativeTime']
+  }
 })

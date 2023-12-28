@@ -40,7 +40,7 @@ const resetForm = () => {
   endDate.value = null
 }
 
-const onClickRemoveWorkItemChild = (child: WorkItemChild, idx: number) => {
+const onClickDeleteWorkItemChild = (child: WorkItemChild, idx: number) => {
   workItem.value.children.splice(idx, 1)
 }
 
@@ -185,7 +185,7 @@ defineExpose({
                   variant="ghost"
                   color="gray"
                   icon="i-heroicons-x-mark"
-                  @click="onClickRemoveWorkItemChild(child, childIdx)"
+                  @click="onClickDeleteWorkItemChild(child, childIdx)"
                 />
               </div>
               <UButton

@@ -6,7 +6,9 @@ interface Props {
 }
 
 const props = defineProps<Props>()
-const { isLoadingMyTemplate, myTemplates, refresh } = useMyTemplate()
+const toast = useToast()
+const { isLoadingMyTemplate, myTemplates, refresh, registerTemplate } =
+  useMyTemplate()
 const isActiveAddTemplateModal = ref(false)
 // 아직 등록되지 않은 템플릿
 const notRegisteredTemplates = computed<TemplateMetaWithRegister[]>(() => {
@@ -26,6 +28,26 @@ const notRegisteredTemplates = computed<TemplateMetaWithRegister[]>(() => {
     .filter((template) => template.supported)
 })
 
+// 템플릿 추가 로딩 관련
+const isLoadingAddTemplate = ref(false)
+
+// 템플릿 추가
+const onAddTemplate = async (template: TemplateMetaWithRegister) => {
+  try {
+    isLoadingAddTemplate.value = true
+    await registerTemplate(template)
+    refresh()
+    isActiveAddTemplateModal.value = false
+    toast.add({ title: '알림', description: '템플릿을 생성하였습니다.' })
+  } catch (error) {
+    console.log(error)
+    toast.add({ title: '알림', description: '템플릿 생성에 실패하였습니다.' })
+  } finally {
+    isLoadingAddTemplate.value = false
+  }
+}
+
+// 템플릿 추가 버튼 클릭
 const onClickAddTemplate = () => {
   isActiveAddTemplateModal.value = !isActiveAddTemplateModal.value
 }
@@ -60,6 +82,7 @@ const onClickAddTemplate = () => {
   <UModal v-model="isActiveAddTemplateModal">
     <TemplatesMyAddTemplate
       :template-options="notRegisteredTemplates"
+      @add="onAddTemplate"
       @close="isActiveAddTemplateModal = false"
     />
   </UModal>
