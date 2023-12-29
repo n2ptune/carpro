@@ -40,6 +40,8 @@ const onClickChangeVisibleFormPassword = () => {
 
 <template>
   <UForm :state="form" class="space-y-4 w-full lg:w-[300px]">
+    <CommonLogoText class="text-center text-2xl lg:text-4xl mb-12" />
+
     <UFormGroup label="이메일" name="email" size="xl">
       <UInput
         v-model="form.email"

@@ -1,12 +1,23 @@
 <script setup lang="ts">
+import type { LayoutKey } from '#build/types/layouts'
 import { useTemplate } from '~/hooks/templates'
 
 definePageMeta({
-  layout: 'default'
+  layout: 'loading'
 })
 
-const { isLoadingTemplate, templateData } = await useTemplate()
-console.log(isLoadingTemplate.value, templateData.value)
+const { templateData } = await useTemplate()
+
+if (!templateData.value) {
+  throw createError({ statusCode: 404, fatal: true })
+}
+
+const layoutMap = {
+  '1': 'standard-light',
+  '2': 'stnadard-dark'
+}[templateData.value.metaUid]
+
+setPageLayout(layoutMap as LayoutKey)
 </script>
 
 <template>

@@ -1,6 +1,6 @@
 <template>
   <main>
-    layout: standard-dark
+    qwf layout: standard-dark
     <slot />
   </main>
 </template>
