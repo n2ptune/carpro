@@ -2,7 +2,8 @@
 definePageMeta({
   layout: 'default',
   name: 'my-page',
-  breadcrumbsLabel: '내 프로필 관리'
+  breadcrumbsLabel: '내 프로필 관리',
+  middleware: 'auth'
 })
 
 const formRef = ref<any>(null)

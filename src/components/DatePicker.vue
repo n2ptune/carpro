@@ -1,5 +1,4 @@
 <script setup lang="ts">
-// @ts-expect-error
 import { DatePicker as VCalendarDatePicker } from 'v-calendar'
 import 'v-calendar/dist/style.css'
 
