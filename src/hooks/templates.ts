@@ -1,3 +1,4 @@
+import { checkOrGetUserProfile } from '~/lib/profile'
 import {
   getUserTemplates,
   getTemplate as getLibTemplate,
@@ -49,12 +50,12 @@ export const templates: TemplateMeta[] = [
   }
 ]
 
-export async function useTemplate(): Promise<TemplateHook> {
-  const route = useRoute()
+export async function useTemplate(slug: string): Promise<TemplateHook> {
   const isLoadingTemplate = ref(false)
   const templateData = ref<Template | null>(null)
+  const userProfileData = ref<UserProfile | null>(null)
 
-  if (!route.params.slug) {
+  if (!slug) {
     throw createError({
       fatal: true,
       message: '템플릿이 존재하지 않습니다.',
@@ -67,7 +68,7 @@ export async function useTemplate(): Promise<TemplateHook> {
     isLoadingTemplate.value = true
 
     try {
-      const template = await getLibTemplate(route.params.slug as string)
+      const template = await getLibTemplate(slug as string)
       if (!template) {
         throw new Error('not-found')
       }
@@ -94,8 +95,12 @@ export async function useTemplate(): Promise<TemplateHook> {
 
   const { error, data } = await useAsyncData(async () => {
     try {
-      const result = await getTemplate()
-      return result
+      const template = await getTemplate()
+      const userProfile = await checkOrGetUserProfile(template.userUid, true)
+
+      if (!template || !userProfile) throw new Error()
+
+      return { template, userProfile }
     } catch (error: any) {
       showError(error)
     }
@@ -109,7 +114,8 @@ export async function useTemplate(): Promise<TemplateHook> {
   }
 
   if (data.value) {
-    templateData.value = data.value
+    templateData.value = data.value.template
+    userProfileData.value = data.value.userProfile
   }
 
   return {
