@@ -8,14 +8,28 @@ export default defineNuxtRouteMiddleware(async (to, _from) => {
   const slug = to.params.slug as string
 
   const setLayout = (metaUid: string) => {
+    if (process.server) return
+
     const layoutMap = {
-      '1': 'standard-light',
-      '2': 'standard-dark'
+      '1': 'standard',
+      '2': 'standard'
     }[metaUid]
 
     if (!layoutMap) return
 
     setPageLayout(layoutMap as LayoutKey)
+  }
+
+  const setTheme = (template: Template) => {
+    if (template.theme === 'light') {
+      if (
+        typeof window !== 'undefined' &&
+        document &&
+        document.documentElement
+      ) {
+        document.documentElement.classList.remove('dark')
+      }
+    }
   }
 
   try {
@@ -38,8 +52,10 @@ export default defineNuxtRouteMiddleware(async (to, _from) => {
       })
 
     templateStore.setData(template, userProfile)
+    setTheme(template)
     setLayout(template.metaUid)
   } catch (error: any) {
+    console.log(error)
     if (error?.message === 'not-found') {
       return createError({
         message: '템플릿 혹은 프로필이 존재하지 않습니다.',

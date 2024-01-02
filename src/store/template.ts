@@ -4,6 +4,10 @@ export const useTemplateStore = defineStore('template', () => {
   const isLoadaedData = computed(
     () => templateData.value && userProfileData.value
   )
+  const templateTheme = computed(() => {
+    if (!templateData.value) return null
+    return templateData.value.theme
+  })
 
   const setData = (template: Template, profile: UserProfile) => {
     templateData.value = template
@@ -11,9 +15,10 @@ export const useTemplateStore = defineStore('template', () => {
   }
 
   return {
-    templateData,
-    userProfileData,
     isLoadaedData,
-    setData
+    setData,
+    templateData,
+    templateTheme,
+    userProfileData
   }
 })
