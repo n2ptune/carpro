@@ -1,16 +1,5 @@
-import { checkOrGetUserProfile } from '~/lib/profile'
-import {
-  getUserTemplates,
-  getTemplate as getLibTemplate,
-  createTemplate
-} from '~/lib/template'
+import { getUserTemplates, createTemplate } from '~/lib/template'
 import { useUserStore } from '~/store/user'
-
-interface TemplateHook {
-  templates: TemplateMeta[]
-  isLoadingTemplate: Ref<boolean>
-  templateData: Ref<Template | null>
-}
 
 interface MyTemplateHook {
   myTemplates: Ref<Template[]>
@@ -49,81 +38,6 @@ export const templates: TemplateMeta[] = [
     type: 'basic'
   }
 ]
-
-export async function useTemplate(slug: string): Promise<TemplateHook> {
-  const isLoadingTemplate = ref(false)
-  const templateData = ref<Template | null>(null)
-  const userProfileData = ref<UserProfile | null>(null)
-
-  if (!slug) {
-    throw createError({
-      fatal: true,
-      message: '템플릿이 존재하지 않습니다.',
-      statusCode: 400
-    })
-  }
-
-  async function getTemplate() {
-    clearError()
-    isLoadingTemplate.value = true
-
-    try {
-      const template = await getLibTemplate(slug as string)
-      if (!template) {
-        throw new Error('not-found')
-      }
-      return template
-    } catch (apiError: any) {
-      console.log(apiError)
-      if (apiError?.message === 'not-found') {
-        throw createError({
-          message: '템플릿이 존재하지 않습니다.',
-          statusCode: 404,
-          fatal: true
-        })
-      } else {
-        throw createError({
-          message: '템플릿 조회에 실패하였습니다.',
-          statusCode: 500,
-          fatal: true
-        })
-      }
-    } finally {
-      isLoadingTemplate.value = false
-    }
-  }
-
-  const { error, data } = await useAsyncData(async () => {
-    try {
-      const template = await getTemplate()
-      const userProfile = await checkOrGetUserProfile(template.userUid, true)
-
-      if (!template || !userProfile) throw new Error()
-
-      return { template, userProfile }
-    } catch (error: any) {
-      showError(error)
-    }
-  })
-
-  if (error.value) {
-    throw createError({
-      statusCode: 404,
-      message: '템플릿이 존재하지 않습니다.'
-    })
-  }
-
-  if (data.value) {
-    templateData.value = data.value.template
-    userProfileData.value = data.value.userProfile
-  }
-
-  return {
-    templates,
-    isLoadingTemplate,
-    templateData
-  }
-}
 
 export function useMyTemplate(): MyTemplateHook {
   const toast = useToast()
