@@ -7,9 +7,8 @@ interface Props {
   tab: Tab
 }
 
-const defaultWorkItem: Partial<Omit<WorkItem, 'children'>> &
-  Pick<WorkItem, 'children'> = {
-  children: [{ text: '' }],
+const defaultWorkItem: WorkItem = {
+  children: [],
   companyName: '',
   description: '',
   endDate: undefined,
@@ -35,7 +34,7 @@ const validateForm = () => {
 }
 
 const resetForm = () => {
-  workItem.value = { ...defaultWorkItem, children: [{ text: '' }] }
+  workItem.value = { ...defaultWorkItem, children: [] }
   startDate.value = null
   endDate.value = null
 }
@@ -46,6 +45,47 @@ const onClickDeleteWorkItemChild = (child: WorkItemChild, idx: number) => {
 
 const onClickAddWorkItemChild = () => {
   workItem.value.children.push({ text: '' })
+}
+
+const toast = useToast()
+
+const validateWorkItem = () => {
+  const rules = [
+    {
+      if: workItem.value.isCurrently && !startDate.value,
+      message: '입사일자를 선택해주세요.'
+    },
+    {
+      if: !workItem.value.isCurrently && (!startDate.value || !endDate.value),
+      message: '입사일자 혹은 퇴사일자를 확인해주세요.'
+    },
+    {
+      if: !workItem.value.companyName,
+      message: '회사 이름을 입력해주세요.'
+    },
+    {
+      if: workItem.value.children.some((t) => !t.text),
+      message: '경력 세부 사항을 입력해주세요.'
+    }
+  ]
+
+  const rule = rules.find((r) => r.if)
+  if (rule) {
+    toast.add({ title: '알림', description: rule.message })
+    return false
+  }
+  return true
+}
+
+const onClickSaveExperience = () => {
+  if (!validateWorkItem()) return
+
+  userProfile.value.workItem = userProfile.value.workItem
+    ? [...userProfile.value.workItem, workItem.value]
+    : [workItem.value]
+
+  resetForm()
+  isOpenWorkItemModal.value = false
 }
 
 watch(
@@ -67,14 +107,14 @@ watch(
 watch(
   () => startDate.value,
   (date) => {
-    workItem.value.startDate = date ? date.getDate() : undefined
+    workItem.value.startDate = date ? date.getTime() : undefined
   }
 )
 
 watch(
   () => endDate.value,
   (date) => {
-    workItem.value.endDate = date ? date.getDate() : undefined
+    workItem.value.endDate = date ? date.getTime() : undefined
   }
 )
 /*********/
@@ -98,6 +138,8 @@ defineExpose({
       title="참고"
       description="경력 사항이 없다면, 항목을 비워두면 됩니다. 템플릿에는 해당 항목이 보이지 않아요."
       icon="i-heroicons-information-circle"
+      variant="soft"
+      color="primary"
       class="mb-4"
     />
 
@@ -110,6 +152,14 @@ defineExpose({
         경력 사항 추가하기
       </UButton>
     </UFormGroup>
+
+    <div v-if="userProfile.workItem" class="my-6 space-y-2">
+      <ProfileItemWorkItem
+        v-for="(workItem, workItemIdx) in userProfile.workItem"
+        :key="workItemIdx"
+        :work-item="workItem"
+      />
+    </div>
 
     <UModal v-model="isOpenWorkItemModal">
       <UCard
@@ -156,7 +206,12 @@ defineExpose({
           <UCheckbox v-model="workItem.isCurrently" label="현재 재직중" />
 
           <UFormGroup label="회사 이름" required>
-            <UInput type="text" size="lg" :maxlength="100" />
+            <UInput
+              v-model="workItem.companyName"
+              type="text"
+              size="lg"
+              :maxlength="100"
+            />
           </UFormGroup>
 
           <UFormGroup
@@ -204,7 +259,13 @@ defineExpose({
 
         <template #footer>
           <div class="mx-auto text-center space-x-2">
-            <UButton color="primary" variant="solid"> 저장 </UButton>
+            <UButton
+              color="primary"
+              variant="solid"
+              @click="onClickSaveExperience"
+            >
+              저장
+            </UButton>
             <UButton
               color="gray"
               variant="solid"

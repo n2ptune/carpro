@@ -3,5 +3,6 @@
 <template>
   <div>
     <TemplatesStandardHero />
+    <TemplatesStandardBody />
   </div>
 </template>
