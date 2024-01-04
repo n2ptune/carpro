@@ -66,6 +66,7 @@ declare global {
   type WorkItem = {
     startDate?: number
     endDate?: number
+    position?: string
     companyName: string
     isCurrently: boolean
     description: string

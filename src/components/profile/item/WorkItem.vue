@@ -3,7 +3,13 @@ interface Props {
   workItem: WorkItem
 }
 
-const props = defineProps<Props>()
+type Emits = {
+  delete: []
+  change: []
+}
+
+defineProps<Props>()
+const emits = defineEmits<Emits>()
 const { $dayjs } = useNuxtApp()
 
 const transformDateFilter = (date?: number) => {
@@ -17,11 +23,16 @@ const workItemDropdownMenus = [
     {
       label: '삭제',
       icon: 'i-heroicons-trash-solid',
-      click: () => {}
+      click: () => {
+        emits('delete')
+      }
     },
     {
       label: '수정',
-      icon: 'i-heroicons-pencil-square-solid'
+      icon: 'i-heroicons-pencil-square-solid',
+      click: () => {
+        emits('change')
+      }
     }
   ]
 ]

@@ -9,6 +9,7 @@ interface Props {
 
 const defaultWorkItem: WorkItem = {
   children: [],
+  position: '',
   companyName: '',
   description: '',
   endDate: undefined,
@@ -19,6 +20,8 @@ const defaultWorkItem: WorkItem = {
 const props = defineProps<Props>()
 /** form */
 const isOpenWorkItemModal = ref(false)
+const isUpdateWorkItemModal = ref(false)
+const updatingIdx = ref<number>(-1)
 const workItem = ref({ ...defaultWorkItem })
 const startDate = ref<Date | null>(null)
 const endDate = ref<Date | null>(null)
@@ -37,6 +40,8 @@ const resetForm = () => {
   workItem.value = { ...defaultWorkItem, children: [] }
   startDate.value = null
   endDate.value = null
+  isUpdateWorkItemModal.value = false
+  updatingIdx.value = -1
 }
 
 const onClickDeleteWorkItemChild = (child: WorkItemChild, idx: number) => {
@@ -80,9 +85,15 @@ const validateWorkItem = () => {
 const onClickSaveExperience = () => {
   if (!validateWorkItem()) return
 
-  userProfile.value.workItem = userProfile.value.workItem
-    ? [...userProfile.value.workItem, workItem.value]
-    : [workItem.value]
+  if (isUpdateWorkItemModal.value) {
+    if (userProfile.value.workItem && updatingIdx.value !== -1) {
+      userProfile.value.workItem[updatingIdx.value] = workItem.value
+    }
+  } else {
+    userProfile.value.workItem = userProfile.value.workItem
+      ? [...userProfile.value.workItem, workItem.value]
+      : [workItem.value]
+  }
 
   resetForm()
   isOpenWorkItemModal.value = false
@@ -118,14 +129,24 @@ watch(
   }
 )
 /*********/
-const registeredWorkItem = ref<WorkItem[]>([])
 const userProfile = inject<Ref<UserProfile>>(profileSymbol) as Ref<UserProfile>
 
-onMounted(() => {
-  if (userProfile.value && userProfile.value.workItem) {
-    registeredWorkItem.value = [...userProfile.value.workItem]
+const onChangeWorkItem = (item: WorkItem, itemIdx: number) => {
+  if (userProfile.value.workItem) {
+    workItem.value = userProfile.value.workItem[itemIdx]
+    isOpenWorkItemModal.value = true
+    isUpdateWorkItemModal.value = true
+    startDate.value = item.startDate ? new Date(item.startDate) : null
+    endDate.value = item.endDate ? new Date(item.endDate) : null
+    updatingIdx.value = itemIdx
   }
-})
+}
+
+const onDeleteWorkItem = (item: WorkItem, itemIdx: number) => {
+  if (userProfile.value.workItem) {
+    userProfile.value.workItem.splice(itemIdx, 1)
+  }
+}
 
 defineExpose({
   validateForm
@@ -158,6 +179,8 @@ defineExpose({
         v-for="(workItem, workItemIdx) in userProfile.workItem"
         :key="workItemIdx"
         :work-item="workItem"
+        @change="() => onChangeWorkItem(workItem, workItemIdx)"
+        @delete="() => onDeleteWorkItem(workItem, workItemIdx)"
       />
     </div>
 
@@ -208,6 +231,15 @@ defineExpose({
           <UFormGroup label="회사 이름" required>
             <UInput
               v-model="workItem.companyName"
+              type="text"
+              size="lg"
+              :maxlength="100"
+            />
+          </UFormGroup>
+
+          <UFormGroup label="담당한 포지션 혹은 직책">
+            <UInput
+              v-model="workItem.position"
               type="text"
               size="lg"
               :maxlength="100"
