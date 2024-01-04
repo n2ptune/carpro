@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import type { Tab, TabField } from '~/hooks/tabs'
-
 interface Props {
   tabs: Tab[]
   activeTab: Tab
@@ -47,9 +45,16 @@ watch(
       orientation="vertical"
       :default-index="0"
       @change="onChangeTab"
+      :ui="{
+        list: {
+          tab: {
+            base: 'relative inline-flex items-center justify-start flex-shrink-0 w-full ui-focus-visible:outline-0 ui-focus-visible:ring-2 ui-focus-visible:ring-primary-500 dark:ui-focus-visible:ring-primary-400 ui-not-focus-visible:outline-none focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 transition-colors duration-200 ease-out'
+          }
+        }
+      }"
     >
       <template #default="{ item }">
-        <div class="space-x-2">
+        <div class="text-left space-x-2">
           <UIcon :name="item.icon" />
           <span class="">{{ item.label }}</span>
         </div>

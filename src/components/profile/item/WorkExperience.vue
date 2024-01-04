@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import type { Tab } from '~/hooks/tabs'
 import dayjs from 'dayjs'
 import { profileSymbol } from '~/hooks/profiles'
 

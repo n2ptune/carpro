@@ -72,6 +72,21 @@ declare global {
     description: string
     children: WorkItemChild[]
   }
+
+  type TabField =
+    | 'basic-information' // 기본 정보
+    | 'work-experience' // 경력 사항
+    | 'awards' // 수상 및 활동
+    | 'certificate' // 자격증
+    | 'education' // 학력
+    | 'language' // 외국어
+
+  type Tab = {
+    name: string
+    active: boolean
+    field: TabField
+    icon: string
+  }
 }
 
 export {}

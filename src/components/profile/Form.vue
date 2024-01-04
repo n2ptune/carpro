@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useUserProfile } from '~/hooks/profiles'
-import { useTabs, type TabField } from '~/hooks/tabs'
+import { useTabs } from '~/hooks/tabs'
 import WorkExperience from './item/WorkExperience.vue'
 import BasicInformation from './item/BasicInformation.vue'
 
@@ -16,10 +16,12 @@ const {
   updateProfile
 } = useUserProfile()
 const getComponent = (field: TabField) => {
-  return {
+  const componentMap: Record<string, any> = {
     'work-experience': WorkExperience,
     'basic-information': BasicInformation
-  }[field]
+  }
+  if (!Object.keys(componentMap).includes(field)) return null
+  return componentMap[field]
 }
 const tabCompRef = ref<Record<string, FormExpose>>({})
 const toast = useToast()
@@ -79,14 +81,14 @@ defineExpose({
           @change="onActiveTab"
         />
       </div>
-      <div class="truncate">
+      <div class="truncate px-1">
         <Component
           v-for="tab in tabs"
           v-show="activeTab.field === tab.field"
           :key="tab.field"
           :is="getComponent(tab.field)"
           :tab="activeTab"
-          :ref="(el) => (tabCompRef[tab.field] = el as any)"
+          :ref="(el: any) => (tabCompRef[tab.field] = el as any)"
         />
       </div>
     </div>

@@ -2,10 +2,19 @@
 export default {
   content: [],
   theme: {
+    container: {
+      screens: {
+        sm: '100%',
+        md: '100%',
+        lg: '840px',
+        xl: '920px',
+        '2xl': '1024px'
+      }
+    },
     extend: {
       container: {
-        screens: {
-          '2xl': '1280px'
+        padding: {
+          DEFAULT: '1rem'
         }
       },
       fontFamily: {

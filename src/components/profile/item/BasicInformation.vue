@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { profileSymbol } from '~/hooks/profiles'
-import type { Tab } from '~/hooks/tabs'
 
 interface Props {
   tab: Tab
