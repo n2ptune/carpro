@@ -2,7 +2,7 @@
 export default defineNuxtConfig({
   css: ['~/assets/base.css'],
   devtools: { enabled: true },
-  modules: ['@pinia/nuxt', '@nuxt/ui', 'dayjs-nuxt'],
+  modules: ['@pinia/nuxt', '@nuxt/ui', 'dayjs-nuxt', '@vueuse/nuxt'],
   runtimeConfig: {
     public: {
       NUXT_APP_FB_API_KEY: process.env.NUXT_APP_FB_API_KEY,

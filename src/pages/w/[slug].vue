@@ -20,5 +20,6 @@ const dynamicComponent = computed(() => {
 </script>
 
 <template>
+  <UNotifications />
   <component :is="dynamicComponent" />
 </template>

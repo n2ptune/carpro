@@ -64,6 +64,14 @@ const validateWorkItem = () => {
       message: '입사일자 혹은 퇴사일자를 확인해주세요.'
     },
     {
+      if:
+        !workItem.value.isCurrently &&
+        startDate.value &&
+        endDate.value &&
+        startDate.value > endDate.value,
+      message: '입사일자는 퇴사일자보다 미래가 될 수 없습니다.'
+    },
+    {
       if: !workItem.value.companyName,
       message: '회사 이름을 입력해주세요.'
     },
