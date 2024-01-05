@@ -11,12 +11,18 @@ const defaultTabs: Tab[] = [
     field: 'work-experience',
     icon: 'i-heroicons-square-3-stack-3d'
   },
-  // {
-  //   name: '수상 및 활동',
-  //   active: false,
-  //   field: 'awards',
-  //   icon: 'i-heroicons-square-3-stack-3d'
-  // }
+  {
+    name: '수상 및 활동',
+    active: false,
+    field: 'awards',
+    icon: 'i-heroicons-trophy'
+  },
+  {
+    name: '자격증',
+    active: false,
+    field: 'certificate',
+    icon: 'i-heroicons-clipboard-document-list'
+  }
 ]
 
 export function useTabs() {

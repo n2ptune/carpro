@@ -3,6 +3,8 @@ import { useUserProfile } from '~/hooks/profiles'
 import { useTabs } from '~/hooks/tabs'
 import WorkExperience from './item/WorkExperience.vue'
 import BasicInformation from './item/BasicInformation.vue'
+import Awards from './item/Awards.vue'
+import Certificate from './item/Certificate.vue'
 
 type FormExpose = {
   validateForm: () => [boolean, TabField]
@@ -18,7 +20,9 @@ const {
 const getComponent = (field: TabField) => {
   const componentMap: Record<string, any> = {
     'work-experience': WorkExperience,
-    'basic-information': BasicInformation
+    'basic-information': BasicInformation,
+    awards: Awards,
+    certificate: Certificate
   }
   if (!Object.keys(componentMap).includes(field)) return null
   return componentMap[field]

@@ -100,7 +100,8 @@ defineExpose({
           v-model="userProfile.intro"
           placeholder="나를 소개하는 글을 입력하세요."
           size="xl"
-          :maxlength="100"
+          :rows="5"
+          :maxlength="200"
         />
       </UFormGroup>
     </div>

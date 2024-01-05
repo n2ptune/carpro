@@ -34,12 +34,14 @@ declare global {
     workItem?: WorkItem[]
     createdAt: number
     updatedAt?: number | null
+    awards?: Awards[]
+    certificates?: Certificate[]
     [key: string]: any
   }
 
   type TemplateType = 'standard' | 'basic'
 
-  type TemplateMeta = {
+  interface TemplateMeta {
     uid: string
     supported: boolean // 지원 여부
     name: string
@@ -63,7 +65,7 @@ declare global {
     text: string
   }
 
-  type WorkItem = {
+  interface WorkItem {
     startDate?: number
     endDate?: number
     position?: string
@@ -81,11 +83,30 @@ declare global {
     | 'education' // 학력
     | 'language' // 외국어
 
-  type Tab = {
+  interface Tab {
     name: string
     active: boolean
     field: TabField
     icon: string
+  }
+
+  interface Awards {
+    type: AwardsType
+    name: string // 수상 및 활동 이름
+    where?: string // 소속
+    awardsDate?: number // 수상 기간 (type: awards)
+    isActivating?: boolean // 활동중 여부
+    startDate?: number // 활동 시작 기간 (type: activity)
+    endDate?: number // 활동 종료 기간 (type: activity)
+    description: string // 수상 및 활동 내용
+  }
+
+  type AwardsType = 'awards' | 'activity'
+
+  interface Certificate {
+    name: string // 자격증 이름
+    where: string // 발급 기관
+    date: number // 취득일자
   }
 }
 
