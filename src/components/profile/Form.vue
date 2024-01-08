@@ -85,7 +85,7 @@ defineExpose({
           @change="onActiveTab"
         />
       </div>
-      <div class="truncate px-1">
+      <div class="truncate pl-1 pr-2 !overflow-y-auto max-h-[950px]">
         <Component
           v-for="tab in tabs"
           v-show="activeTab.field === tab.field"
