@@ -3,6 +3,8 @@ import { useUserProfile } from '~/hooks/profiles'
 import { useTabs } from '~/hooks/tabs'
 import WorkExperience from './item/WorkExperience.vue'
 import BasicInformation from './item/BasicInformation.vue'
+import Awards from './item/Awards.vue'
+import Certificate from './item/Certificate.vue'
 
 type FormExpose = {
   validateForm: () => [boolean, TabField]
@@ -18,7 +20,9 @@ const {
 const getComponent = (field: TabField) => {
   const componentMap: Record<string, any> = {
     'work-experience': WorkExperience,
-    'basic-information': BasicInformation
+    'basic-information': BasicInformation,
+    awards: Awards,
+    certificate: Certificate
   }
   if (!Object.keys(componentMap).includes(field)) return null
   return componentMap[field]
@@ -81,7 +85,7 @@ defineExpose({
           @change="onActiveTab"
         />
       </div>
-      <div class="truncate px-1">
+      <div class="truncate pl-1 pr-2 !overflow-y-auto max-h-[950px]">
         <Component
           v-for="tab in tabs"
           v-show="activeTab.field === tab.field"
