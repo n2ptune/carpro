@@ -20,15 +20,20 @@ export default defineNuxtRouteMiddleware(async (to, _from) => {
     setPageLayout(layoutMap as LayoutKey)
   }
 
-  const setTheme = (template: Template) => {
-    if (template.theme === 'light') {
-      if (
-        typeof window !== 'undefined' &&
-        document &&
-        document.documentElement
-      ) {
-        document.documentElement.classList.remove('dark')
-      }
+  const setTheme = async (template: Template) => {
+    if (typeof window !== 'undefined' && document && document.documentElement) {
+      /**
+       * HTML Element의 클래스를 강제로 조작하는 타이밍을
+       * tailwind darkMode 속성이 지정되고 난 뒤로 지연시킴
+       */
+      setTimeout(() => {
+        document.documentElement.classList.add(
+          template.theme === 'light' ? 'light' : 'dark'
+        )
+        document.documentElement.classList.remove(
+          template.theme === 'light' ? 'dark' : 'light'
+        )
+      }, 0)
     }
   }
 
