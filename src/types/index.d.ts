@@ -99,6 +99,7 @@ declare global {
     startDate?: number // 활동 시작 기간 (type: activity)
     endDate?: number // 활동 종료 기간 (type: activity)
     description: string // 수상 및 활동 내용
+    url?: string // 참고 URL
   }
 
   type AwardsType = 'awards' | 'activity'
