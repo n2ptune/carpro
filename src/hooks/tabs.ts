@@ -35,6 +35,10 @@ export function useTabs() {
     if (findTab) findTab.active = true
   }
 
+  onBeforeUnmount(() => {
+    onActiveTab('basic-information')
+  })
+
   return {
     tabs,
     activeTab,
