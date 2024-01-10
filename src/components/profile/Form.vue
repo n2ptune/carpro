@@ -34,24 +34,21 @@ const toast = useToast()
  * 프로필 저장
  */
 const onClickSaveProfile = () => {
-  let flag = false
-
-  // 탭별로 validateForm 호출
-  tabs.forEach((tab) => {
-    if (flag) return
+  for (const tab of tabs) {
     if (tabCompRef.value[tab.field]) {
       const tabRef = tabCompRef.value[tab.field]
       const [validated, field] = tabRef.validateForm()
 
       if (!validated) {
-        flag = true
         toast.add({ title: '알림', description: '항목을 확인해주세요.' })
         onActiveTab(tab.field)
+        return
       }
-    }
-  })
 
-  if (flag) return false
+      // TODO
+      // 이벤트 수신용 함수 호출 (탭 내 데이터 변환 등)
+    }
+  }
 
   updateProfile()
 }

@@ -105,8 +105,8 @@ declare global {
   type AwardsType = 'awards' | 'activity'
 
   interface Certificate {
-    name: string // 자격증 이름
-    where: string // 발급 기관
+    name?: string // 자격증 이름
+    where?: string // 발급 기관
     date: number // 취득일자
   }
 }

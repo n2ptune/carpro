@@ -31,10 +31,6 @@ const formattedEndDate = computed(() =>
   endDate.value ? $dayjs(endDate.value).format('YYYY-MM') : ''
 )
 
-const validateForm = () => {
-  return [true, props.tab.field]
-}
-
 const resetForm = () => {
   workItem.value = { ...defaultWorkItem, children: [] }
   startDate.value = null
@@ -159,6 +155,10 @@ const transformDateFilter = (date?: number) => {
   if (!date || typeof date !== 'number') return date
 
   return $dayjs(date).format('YYYY-MM')
+}
+
+const validateForm = () => {
+  return [true, props.tab.field]
 }
 
 defineExpose({
