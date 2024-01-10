@@ -11,8 +11,10 @@ definePageMeta({
       class="[&>*]:text-4xl [&>*]:lg:text-6xl [&>*]:font-black [&>*]:!leading-[1.175]"
     >
       <div>
-        <span class="text-primary-500">Car</span>eer
-        <span class="text-primary-500">Pro</span>file
+        <span class="text-primary-500">Car</span>
+        eer
+        <span class="text-primary-500">Pro</span>
+        file
       </div>
       <div>나의 커리어</div>
       <div>나의 이력서 관리</div>

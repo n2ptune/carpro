@@ -33,7 +33,7 @@ const onClickAddTemplate = () => {
 
 <template>
   <UCard :ui="{ ring: '' }">
-    <template #header> 템플릿 추가 </template>
+    <template #header>템플릿 추가</template>
     <div class="space-y-2">
       <UFormGroup label="템플릿 선택" required class="w-72">
         <USelectMenu
@@ -45,9 +45,7 @@ const onClickAddTemplate = () => {
         />
       </UFormGroup>
 
-      <UButton :disabled="!selected" ccolor="primary">
-        템플릿 미리보기
-      </UButton>
+      <UButton :disabled="!selected" ccolor="primary">템플릿 미리보기</UButton>
     </div>
 
     <template #footer>
