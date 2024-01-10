@@ -10,7 +10,7 @@ const defaultTabs: Tab[] = [
     active: false,
     field: 'work-experience',
     icon: 'i-heroicons-square-3-stack-3d'
-  },
+  }
   // {
   //   name: '수상 및 활동',
   //   active: false,

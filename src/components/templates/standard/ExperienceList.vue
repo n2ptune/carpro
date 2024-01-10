@@ -23,14 +23,16 @@ const transformDate = (date: number) => $dayjs(date).format('YYYY-MM')
           <div class="text-2xl">{{ item.companyName }}</div>
           <div class="text-sm">{{ item.position }}</div>
           <div class="text-sm text-gray-400 dark:text-gray-500 space-x-2">
-            <span>{{
-              item.startDate ? transformDate(item.startDate) : item.startDate
-            }}</span>
+            <span>
+              {{
+                item.startDate ? transformDate(item.startDate) : item.startDate
+              }}
+            </span>
             <span>~</span>
             <span v-if="item.isCurrently" class="text-primary-500">재직중</span>
-            <span v-else>{{
-              item.endDate ? transformDate(item.endDate) : item.endDate
-            }}</span>
+            <span v-else>
+              {{ item.endDate ? transformDate(item.endDate) : item.endDate }}
+            </span>
           </div>
         </div>
       </div>

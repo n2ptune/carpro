@@ -31,6 +31,7 @@ const onClickAuthButton = () => {
     :disabled="props.disabled || !fbStore.fbAppLoaded || authenticating"
     @click="onClickAuthButton"
   >
-    <Icon name="logos:google-icon" />Continue with Google
+    <Icon name="logos:google-icon" />
+    Continue with Google
   </UButton>
 </template>

@@ -36,10 +36,10 @@ const headerMenus = [
   <header class="fixed top-0 left-0 w-full p-3 backdrop-blur-lg">
     <div class="flex justify-between items-center">
       <div class="text-sm">
-        {{ userProfileData?.name
-        }}<span v-if="userProfileData?.position" class="position">{{
-          userProfileData.position
-        }}</span>
+        {{ userProfileData?.name }}
+        <span v-if="userProfileData?.position" class="position">
+          {{ userProfileData.position }}
+        </span>
       </div>
       <div class="text-sm">
         <UDropdown :items="headerMenus">
