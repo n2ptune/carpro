@@ -20,5 +20,9 @@ const { userProfileData, isLoadaedData } = storeToRefs(templateStore)
       <TemplatesStandardSectionTitle label="수상 및 활동" />
       <TemplatesStandardAwardsList :items="userProfileData.awards || []" />
     </div>
+    <div class="certificate">
+      <TemplatesStandardSectionTitle label="자격증" />
+      <TemplatesStandardCertList :items="userProfileData.certificates || []" />
+    </div>
   </div>
 </template>
