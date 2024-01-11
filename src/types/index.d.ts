@@ -14,6 +14,9 @@ declare module 'vue' {
 }
 
 declare global {
+  /**
+   * Domain types
+   */
   type FirebaseUser = _FirebaseUser
 
   interface User {
@@ -93,11 +96,10 @@ declare global {
   interface Awards {
     type: AwardsType
     name: string // 수상 및 활동 이름
-    where?: string // 소속
-    awardsDate?: number // 수상 기간 (type: awards)
-    isActivating?: boolean // 활동중 여부
-    startDate?: number // 활동 시작 기간 (type: activity)
-    endDate?: number // 활동 종료 기간 (type: activity)
+    where: string // 소속
+    isActivating: boolean // 활동중 여부
+    startDate?: number | null // 활동 시작 기간 (type: activity, awards)
+    endDate?: number | null // 활동 종료 기간 (type: activity)
     description: string // 수상 및 활동 내용
     url?: string // 참고 URL
   }
@@ -109,6 +111,17 @@ declare global {
     where?: string // 발급 기관
     date: number // 취득일자
   }
+
+  /*******************************/
+  /*******************************/
+  /*******************************/
+
+  /**
+   * Custom utility types
+   */
+  type Nullable<T> = T extends number
+    ? T | null // 더 확장해야 하는디.. 귀찮..
+    : { [P in keyof T]: T[P] | null }
 }
 
 export {}

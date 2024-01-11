@@ -8,6 +8,7 @@ import Certificate from './item/Certificate.vue'
 
 type FormExpose = {
   validateForm: () => [boolean, TabField]
+  saveHook?: () => void
 }
 
 const { tabs, onActiveTab, activeTab } = useTabs()
@@ -45,8 +46,10 @@ const onClickSaveProfile = () => {
         return
       }
 
-      // TODO
       // 이벤트 수신용 함수 호출 (탭 내 데이터 변환 등)
+      if (typeof tabRef.saveHook === 'function') {
+        tabRef.saveHook()
+      }
     }
   }
 

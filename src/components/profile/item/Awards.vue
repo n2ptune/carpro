@@ -10,11 +10,10 @@ const defaultAwardsItem: Awards = {
   description: '',
   name: '',
   type: 'awards',
-  awardsDate: undefined,
-  endDate: undefined,
+  endDate: null,
   isActivating: false,
-  startDate: undefined,
-  where: undefined,
+  startDate: null,
+  where: '',
   url: ''
 }
 const userProfile = inject<Ref<UserProfile>>(profileSymbol) as Ref<UserProfile>
@@ -128,8 +127,19 @@ const onDeleteAwardsItem = (award: Awards, index: number) => {
   }
 }
 
+const saveHook = () => {
+  if (userProfile.value.awards) {
+    userProfile.value.awards = userProfile.value.awards.map((award) => ({
+      ...award,
+      endDate: award.type === 'awards' ? null : award.endDate,
+      url: award.url || ''
+    }))
+  }
+}
+
 defineExpose({
-  validateForm
+  validateForm,
+  saveHook
 })
 </script>
 

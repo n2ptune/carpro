@@ -61,8 +61,23 @@ const validateForm = () => {
   return [true, props.tab.field]
 }
 
+const saveHook = () => {
+  if (userProfile.value.certificates) {
+    userProfile.value.certificates = userProfile.value.certificates.map(
+      (cert) => ({
+        ...cert,
+        date:
+          typeof cert.date === 'object'
+            ? (cert.date as Date).getTime()
+            : (cert.date as number)
+      })
+    )
+  }
+}
+
 defineExpose({
-  validateForm
+  validateForm,
+  saveHook
 })
 </script>
 
