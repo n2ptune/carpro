@@ -3,6 +3,10 @@ definePageMeta({
   name: 'home',
   breadcrumbsLabel: ''
 })
+
+useHead({
+  title: 'Home'
+})
 </script>
 
 <template>

@@ -19,6 +19,10 @@ watch(
   },
   { immediate: true }
 )
+
+useHead({
+  title: 'Login'
+})
 </script>
 
 <template>
