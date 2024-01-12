@@ -85,6 +85,7 @@ declare global {
     | 'certificate' // 자격증
     | 'education' // 학력
     | 'language' // 외국어
+    | 'project' // 프로젝트
 
   interface Tab {
     name: string
