@@ -17,6 +17,17 @@ const dynamicComponent = computed(() => {
     }[templateStore.templateData.type] || null
   )
 })
+
+useSeoMeta({
+  title: `${templateStore.userProfileData?.name} | ${templateStore.userProfileData?.position}`,
+  ogTitle: `${templateStore.userProfileData?.name} | ${templateStore.userProfileData?.position}`,
+  description:
+    templateStore.userProfileData?.intro ||
+    `${templateStore.userProfileData?.name} | ${templateStore.userProfileData?.position}`,
+  ogDescription:
+    templateStore.userProfileData?.intro ||
+    `${templateStore.userProfileData?.name} | ${templateStore.userProfileData?.position}`
+})
 </script>
 
 <template>
