@@ -230,7 +230,7 @@ defineExpose({
           </UFormGroup>
 
           <UFormGroup label="수상 및 활동일시" required>
-            <div class="flex flex-nowrap [&>*]:flex-auto space-x-3">
+            <div class="flex flex-nowrap [&>*]:basis-[50%] space-x-3">
               <template v-if="awardsForm.type === 'awards'">
                 <UPopover>
                   <UButton leading-icon="i-heroicons-calendar-solid" block>

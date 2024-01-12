@@ -32,6 +32,9 @@ defineProps<Props>()
           <p class="mt-2 text-base truncate">
             {{ item.description }}
           </p>
+          <p v-if="item.url" class="mt-2">
+            <CommonLinkButton :label="item.url" :url="item.url" />
+          </p>
         </template>
       </TemplatesCommonFlexContent>
     </TemplatesCommonFlexContainer>

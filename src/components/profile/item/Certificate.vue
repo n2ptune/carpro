@@ -5,17 +5,16 @@ interface Props {
   tab: Tab
 }
 
-type UICertificate = { date: number | null } & Partial<Certificate>
-
 const props = defineProps<Props>()
 const userProfile = inject<Ref<UserProfile>>(profileSymbol) as Ref<UserProfile>
 const toast = useToast()
 const { $dayjs } = useNuxtApp()
 
-const defaultCertificate: UICertificate = {
+const defaultCertificate: Certificate = {
   date: Date.now(),
-  name: '',
-  where: ''
+  where: '',
+  description: '',
+  name: ''
 }
 
 const onClickAddCert = () => {
@@ -83,58 +82,73 @@ defineExpose({
 
 <template>
   <ProfileItemBase :label="$props.tab.name">
-    <UFormGroup v-if="userProfile.certificates" class="space-y-3">
+    <UFormGroup v-if="userProfile.certificates" class="item-wrapper space-y-3">
       <div
         v-for="(cert, certIdx) in userProfile.certificates"
-        class="flex flex-nowrap [&>*]:flex-auto space-x-3 py-2"
+        class="item py-2 space-y-4"
       >
-        <UFormGroup label="자격증 이름" required>
-          <UInput
-            v-model="cert.name"
-            size="lg"
-            :maxlength="50"
-            placeholder="자격증 이름을 입력하세요."
-          />
-        </UFormGroup>
+        <div class="flex flex-nowrap [&>*]:flex-auto space-x-3">
+          <UFormGroup label="자격증 이름" required>
+            <UInput
+              v-model="cert.name"
+              size="lg"
+              :maxlength="50"
+              placeholder="자격증 이름을 입력하세요."
+            />
+          </UFormGroup>
 
-        <UFormGroup label="취득 기관명" required>
-          <UInput
-            v-model="cert.where"
-            size="lg"
-            :maxlength="50"
-            placeholder="취득 기관명을 입력하세요."
-          />
-        </UFormGroup>
+          <UFormGroup label="취득 기관명" required>
+            <UInput
+              v-model="cert.where"
+              size="lg"
+              :maxlength="50"
+              placeholder="취득 기관명을 입력하세요."
+            />
+          </UFormGroup>
 
-        <UFormGroup label="취득일자" required>
-          <!-- <UInput v-model="cert.date" size="lg" /> -->
-          <div class="flex flex-nowrap space-x-2">
-            <UPopover>
-              <UButton block>
-                취득일자
-                <span v-if="cert.date">
-                  {{ formatDateFilter(cert.date) }}
-                </span>
-              </UButton>
+          <UFormGroup label="취득일자" required>
+            <!-- <UInput v-model="cert.date" size="lg" /> -->
+            <div class="flex flex-nowrap space-x-2">
+              <UPopover>
+                <UButton block>
+                  취득일자
+                  <span v-if="cert.date">
+                    {{ formatDateFilter(cert.date) }}
+                  </span>
+                </UButton>
 
-              <template #panel="{ close }">
-                <DatePicker v-model="cert.date" @close="close" />
-              </template>
-            </UPopover>
-            <UButton
-              icon="i-heroicons-trash"
-              color="gray"
-              @click="onClickDeleteCert(certIdx)"
-            ></UButton>
-          </div>
-        </UFormGroup>
+                <template #panel="{ close }">
+                  <DatePicker v-model="cert.date" @close="close" />
+                </template>
+              </UPopover>
+              <UButton
+                icon="i-heroicons-trash"
+                color="gray"
+                @click="onClickDeleteCert(certIdx)"
+              ></UButton>
+            </div>
+          </UFormGroup>
+        </div>
+        <div class="block">
+          <UFormGroup
+            label="비고"
+            help="자격증에 대한 덧붙이고 싶은 내용이 있으면 입력합니다."
+          >
+            <UInput
+              v-model="cert.description"
+              size="lg"
+              :maxlength="100"
+              placeholder="비고를 입력하세요."
+            />
+          </UFormGroup>
+        </div>
       </div>
     </UFormGroup>
 
     <CommonEmptyArea v-else label="자격증 정보를 추가해주세요." />
 
     <UButton
-      class="mt-4"
+      class="mt-2"
       block
       variant="solid"
       color="primary"
@@ -145,3 +159,12 @@ defineExpose({
     </UButton>
   </ProfileItemBase>
 </template>
+
+<style lang="postcss" scoped>
+.item-wrapper {
+  & .item + .item {
+    @apply border-dashed border-t border-t-gray-300
+    dark:border-t-gray-700 pt-3 mt-3;
+  }
+}
+</style>

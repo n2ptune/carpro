@@ -2,10 +2,10 @@
 interface Props {
   mainLabel?: string
   subLabel?: string
-  viewDate: boolean
+  viewDate?: boolean
   startDate?: number
   endDate?: Nullable<number>
-  currently: boolean
+  currently?: boolean
 }
 
 withDefaults(defineProps<Props>(), {
