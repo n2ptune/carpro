@@ -5,4 +5,5 @@
   <main class="">
     <slot />
   </main>
+  <TemplatesFooter />
 </template>

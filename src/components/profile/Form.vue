@@ -3,9 +3,12 @@ import { useUserProfile } from '~/hooks/profiles'
 import { useTabs } from '~/hooks/tabs'
 import WorkExperience from './item/WorkExperience.vue'
 import BasicInformation from './item/BasicInformation.vue'
+import Awards from './item/Awards.vue'
+import Certificate from './item/Certificate.vue'
 
 type FormExpose = {
   validateForm: () => [boolean, TabField]
+  saveHook?: () => void
 }
 
 const { tabs, onActiveTab, activeTab } = useTabs()
@@ -18,7 +21,9 @@ const {
 const getComponent = (field: TabField) => {
   const componentMap: Record<string, any> = {
     'work-experience': WorkExperience,
-    'basic-information': BasicInformation
+    'basic-information': BasicInformation,
+    awards: Awards,
+    certificate: Certificate
   }
   if (!Object.keys(componentMap).includes(field)) return null
   return componentMap[field]
@@ -30,24 +35,23 @@ const toast = useToast()
  * 프로필 저장
  */
 const onClickSaveProfile = () => {
-  let flag = false
-
-  // 탭별로 validateForm 호출
-  tabs.forEach((tab) => {
-    if (flag) return
+  for (const tab of tabs) {
     if (tabCompRef.value[tab.field]) {
       const tabRef = tabCompRef.value[tab.field]
       const [validated, field] = tabRef.validateForm()
 
       if (!validated) {
-        flag = true
         toast.add({ title: '알림', description: '항목을 확인해주세요.' })
         onActiveTab(tab.field)
+        return
+      }
+
+      // 이벤트 수신용 함수 호출 (탭 내 데이터 변환 등)
+      if (typeof tabRef.saveHook === 'function') {
+        tabRef.saveHook()
       }
     }
-  })
-
-  if (flag) return false
+  }
 
   updateProfile()
 }
@@ -81,7 +85,7 @@ defineExpose({
           @change="onActiveTab"
         />
       </div>
-      <div class="truncate px-1">
+      <div class="truncate pl-1 pr-2 !overflow-y-auto max-h-[950px]">
         <Component
           v-for="tab in tabs"
           v-show="activeTab.field === tab.field"

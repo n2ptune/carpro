@@ -1,12 +1,11 @@
 <script setup lang="ts">
 import { useTemplateStore } from '~/store/template'
 
-const PUBLIC_URL = 'carpro.imkh.dev'
-
+const runtimeConfig = useRuntimeConfig()
 const templateStore = useTemplateStore()
 const { userProfileData, templateData } = storeToRefs(templateStore)
 const url = computed(() => {
-  return `https://${PUBLIC_URL}/w/${templateData.value?.uid}`
+  return `https://${runtimeConfig.public.PUBLIC_URL}/w/${templateData.value?.uid}`
 })
 const { copy } = useClipboard({ legacy: true, source: url.value })
 const router = useRouter()

@@ -11,7 +11,9 @@ export default defineNuxtConfig({
       NUXT_APP_FB_STORAGE_BUCKET: process.env.NUXT_APP_FB_STORAGE_BUCKET,
       NUXT_APP_FB_MESSAGING_SENDER_ID:
         process.env.NUXT_APP_FB_MESSAGING_SENDER_ID,
-      NUXT_APP_FB_APP_ID: process.env.NUXT_APP_FB_APP_ID
+      NUXT_APP_FB_APP_ID: process.env.NUXT_APP_FB_APP_ID,
+      PUBLIC_URL: 'https://carpro.imkh.dev',
+      SERVICE_NAME: 'CARPRO'
     }
   },
   srcDir: 'src/',

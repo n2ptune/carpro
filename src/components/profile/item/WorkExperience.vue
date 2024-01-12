@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import dayjs from 'dayjs'
 import { profileSymbol } from '~/hooks/profiles'
 
 interface Props {
@@ -17,6 +16,7 @@ const defaultWorkItem: WorkItem = {
 }
 
 const props = defineProps<Props>()
+const { $dayjs } = useNuxtApp()
 /** form */
 const isOpenWorkItemModal = ref(false)
 const isUpdateWorkItemModal = ref(false)
@@ -25,15 +25,11 @@ const workItem = ref({ ...defaultWorkItem })
 const startDate = ref<Date | null>(null)
 const endDate = ref<Date | null>(null)
 const formattedStartDate = computed(() =>
-  startDate.value ? dayjs(startDate.value).format('YYYY-MM') : ''
+  startDate.value ? $dayjs(startDate.value).format('YYYY-MM') : ''
 )
 const formattedEndDate = computed(() =>
-  endDate.value ? dayjs(endDate.value).format('YYYY-MM') : ''
+  endDate.value ? $dayjs(endDate.value).format('YYYY-MM') : ''
 )
-
-const validateForm = () => {
-  return [true, props.tab.field]
-}
 
 const resetForm = () => {
   workItem.value = { ...defaultWorkItem, children: [] }
@@ -155,6 +151,16 @@ const onDeleteWorkItem = (item: WorkItem, itemIdx: number) => {
   }
 }
 
+const transformDateFilter = (date?: number) => {
+  if (!date || typeof date !== 'number') return date
+
+  return $dayjs(date).format('YYYY-MM')
+}
+
+const validateForm = () => {
+  return [true, props.tab.field]
+}
+
 defineExpose({
   validateForm
 })
@@ -182,14 +188,29 @@ defineExpose({
     </UFormGroup>
 
     <div v-if="userProfile.workItem" class="my-6 space-y-2">
-      <ProfileItemWorkItem
+      <ProfileListItem
         v-for="(workItem, workItemIdx) in userProfile.workItem"
         :key="workItemIdx"
-        :work-item="workItem"
+        :item="workItem"
         @change="() => onChangeWorkItem(workItem, workItemIdx)"
         @delete="() => onDeleteWorkItem(workItem, workItemIdx)"
-      />
+      >
+        <template #description="{ item }">
+          <div>{{ transformDateFilter(item.startDate) }}</div>
+          <span>~</span>
+          <div>
+            {{
+              item.isCurrently ? '재직중' : transformDateFilter(item.endDate)
+            }}
+          </div>
+          <div class="truncate max-w-[130px] lg:max-w-[450px]">
+            {{ item.companyName }}
+          </div>
+        </template>
+      </ProfileListItem>
     </div>
+
+    <CommonEmptyArea v-else label="경력 사항을 추가해주세요." />
 
     <UModal v-model="isOpenWorkItemModal">
       <UCard
@@ -205,7 +226,7 @@ defineExpose({
           <UFormGroup label="재직 기간" required>
             <div class="flex flex-nowrap space-x-3">
               <UPopover class="flex-1">
-                <UButton block>
+                <UButton leading-icon="i-heroicons-calendar-solid" block>
                   입사일자
                   <span v-if="formattedStartDate">
                     {{ formattedStartDate }}
@@ -219,7 +240,7 @@ defineExpose({
               <template v-if="!workItem.isCurrently">
                 <span class="align-sub inline-block">~</span>
                 <UPopover class="flex-1">
-                  <UButton block>
+                  <UButton leading-icon="i-heroicons-calendar-solid" block>
                     퇴사일자
                     <span v-if="formattedEndDate">
                       {{ formattedEndDate }}
