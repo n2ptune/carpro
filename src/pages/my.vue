@@ -13,5 +13,6 @@ const formRef = ref<any>(null)
   <AuthGuard>
     <ProfileForm ref="formRef" />
     <TemplatesMyContainer :form-ref="formRef" />
+    <AuthAccountsSignOut />
   </AuthGuard>
 </template>
