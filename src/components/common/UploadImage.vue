@@ -1,4 +1,7 @@
 <script setup lang="ts">
+import { getDownloadURL } from 'firebase/storage'
+import { getUploadImageTask } from '~/lib/image'
+
 interface Props {
   accept?: string
   multiple?: boolean
@@ -6,7 +9,9 @@ interface Props {
 
 type Emits = {
   loading: []
-  uploaded: []
+  progress: [percent: number]
+  uploaded: [url: string]
+  error: [error: any]
 }
 
 const emits = defineEmits<Emits>()
@@ -45,16 +50,36 @@ const onChangeFile = () => {
     isLoading.value = true
     emits('loading')
 
-    // 이미지 업로드에 관련된 로직...
-    // upload
-
-    // 이미지 업로드가 정상적으로 종료되었을 때
-    isLoading.value = false
-    emits('uploaded')
+    // 이미지 업로드에 관련된 로직
+    // 이미지 다중 건에 대해서는 추후에 개발, 지금은 다건만 업로드할 수 있도록 처리
+    const task = getUploadImageTask(file[0])
+    task.on(
+      'state_changed',
+      (snapshot) => {
+        // 전송된 바이트 크기와 전송할 바이트 크기로 얼마정도 보내졌는지
+        // 0 ~ 100 퍼센트로 환산하고 부모에 전파한다.
+        const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+        emits('progress', progress)
+      },
+      (error) => {
+        // 업로드 에러 발생시 부모에 전파하고 토스트 메세지를 노출한다.
+        emits('error', error)
+        toast.add({
+          title: '',
+          description: '이미지 업로드에 실패하였습니다.' + '\n' + error.message
+        })
+        console.error(error)
+      },
+      async () => {
+        // 이미지 업로드가 정상적으로 종료되었을 때
+        // 로딩 상태를 전환하고, 접근할 수 있는 URL을 조회해서 부모에게 전파한다.
+        isLoading.value = false
+        const url = await getDownloadURL(task.snapshot.ref)
+        emits('uploaded', url)
+      }
+    )
   }
 }
-
-const uploadImage = async (file: FileList) => {}
 
 defineExpose({
   fileRef
