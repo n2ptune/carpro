@@ -5,13 +5,14 @@ import { getUploadImageTask } from '~/lib/image'
 interface Props {
   accept?: string
   multiple?: boolean
+  modelValue: boolean
 }
 
 type Emits = {
-  loading: []
   progress: [percent: number]
   uploaded: [url: string]
   error: [error: any]
+  'update:model-value': [boolean]
 }
 
 const emits = defineEmits<Emits>()
@@ -20,11 +21,11 @@ const props = withDefaults(defineProps<Props>(), {
   multiple: false
 })
 const toast = useToast()
-
-const isLoading = ref(false)
 const fileRef = ref<HTMLInputElement | null>(null)
 
 const onClickUserPhoto = () => {
+  // 이미 업로드 상태인 경우 종료한다.
+  if (props.modelValue) return
   if (fileRef.value) {
     fileRef.value.click()
   }
@@ -47,8 +48,7 @@ const onChangeFile = () => {
 
     // 이미지 업로드 로직 실행 전/후 처리하기 위해 부모에
     // 업로드 실행 상태를 전파한다.
-    isLoading.value = true
-    emits('loading')
+    emits('update:model-value', true)
 
     // 이미지 업로드에 관련된 로직
     // 이미지 다중 건에 대해서는 추후에 개발, 지금은 다건만 업로드할 수 있도록 처리
@@ -64,6 +64,7 @@ const onChangeFile = () => {
       (error) => {
         // 업로드 에러 발생시 부모에 전파하고 토스트 메세지를 노출한다.
         emits('error', error)
+        emits('update:model-value', false)
         toast.add({
           title: '',
           description: '이미지 업로드에 실패하였습니다.' + '\n' + error.message
@@ -73,9 +74,11 @@ const onChangeFile = () => {
       async () => {
         // 이미지 업로드가 정상적으로 종료되었을 때
         // 로딩 상태를 전환하고, 접근할 수 있는 URL을 조회해서 부모에게 전파한다.
-        isLoading.value = false
         const url = await getDownloadURL(task.snapshot.ref)
         emits('uploaded', url)
+        emits('update:model-value', false)
+        fileRef.value!.value = ''
+        fileRef.value!.files = null
       }
     )
   }
