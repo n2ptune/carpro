@@ -1,6 +1,6 @@
 import { initializeApp, getApps } from 'firebase/app'
 import type { FirebaseApp } from 'firebase/app'
-import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth'
+import { getAuth, onAuthStateChanged } from 'firebase/auth'
 import { useFbStore } from '~/store/fb'
 import { useUserStore } from '~/store/user'
 import { checkInStoreUser } from '~/lib/user'
@@ -31,7 +31,7 @@ export default defineNuxtPlugin((nuxtApp) => {
   fbStore.$patch({ fbAppLoaded: true })
 
   onAuthStateChanged(auth, (user) => {
-    console.log('onAuthStateChanged', user)
+    // console.log('onAuthStateChanged', user)
     // 서버사이드 인증 불필요
     if (process.server) return
     // 인증 정보 삭제된 경우 유저 스토어 초기화
