@@ -39,7 +39,7 @@ const onUploadedProfileImage = (url: string) => {
             />
           </span>
         </div>
-        <img v-else :src="props.photoUrl" />
+        <ZImage v-else :src="props.photoUrl" />
       </CommonUploadImage>
     </div>
     <div class="space-y-2">
