@@ -7,6 +7,10 @@ definePageMeta({
 })
 
 const formRef = ref<any>(null)
+
+useHead({
+  title: 'My Profile'
+})
 </script>
 
 <template>
