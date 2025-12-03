@@ -1,7 +1,7 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   css: ['~/assets/base.css'],
-  devtools: { enabled: true },
+  devtools: { enabled: process.env.NODE_ENV === 'development' },
   modules: ['@pinia/nuxt', '@nuxt/ui', 'dayjs-nuxt', '@vueuse/nuxt'],
   runtimeConfig: {
     public: {
