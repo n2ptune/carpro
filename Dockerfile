@@ -1,6 +1,6 @@
 # install
 
-ARG NODE_VERSION=18.18.2
+ARG NODE_VERSION=22-alpine
 
 FROM node:${NODE_VERSION} as base
 
