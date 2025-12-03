@@ -29,6 +29,8 @@ ENV PORT=$PORT
 
 EXPOSE ${PORT}
 
+COPY --from=builder /app/package.json ./
+
 COPY --from=builder /app/.output /app/.output/
 
-CMD ["node", "/app/.output/server/index.mjs"]
+CMD ["npm", "start"]
