@@ -14,11 +14,11 @@ WORKDIR /app
 
 FROM base as builder
 
-COPY --link package*.json .
+COPY --link package*.json ./
 
 RUN npm install
 
-COPY --link . .
+COPY --link . ./
 
 RUN npm run build
 
@@ -28,6 +28,6 @@ FROM base as runner
 
 ENV PORT=$PORT
 
-COPY --from=builder /app/.output /app/.output
+COPY --from=builder /app/.output /app/.output/
 
-CMD ["node", ".output/server/index.mjs"]
+CMD ["node", "/app/.output/server/index.mjs"]
