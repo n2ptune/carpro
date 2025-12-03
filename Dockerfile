@@ -31,4 +31,4 @@ EXPOSE ${PORT}
 
 COPY --from=builder /app/.output /app/.output/
 
-CMD ["node", "/app/.output/server/index.mjs"]
+CMD ["PORT=20500", "node", "/app/.output/server/index.mjs"]
