@@ -21,10 +21,9 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.SERVER_PORT }}
           script: |
-            echo "Test Deployment Script"
-            # cd /path/to/your/project  # 서버에서 프로젝트가 위치한 절대 경로로 변경하세요
-            # git pull origin main  # 브랜치를 맞춰서 변경하세요
-            # docker build -t carpro-app .
-            # docker stop carpro-app || true
-            # docker rm carpro-app || true
-            # docker run -d --name carpro-app -p 3000:3000 carpro-app
+            cd /home/pi/carpro
+            git pull origin main
+            docker build -t carpro-app .
+            docker stop carpro-app || true
+            docker rm carpro-app || true
+            docker run -d --name carpro-app -p 3000:3000 carpro-app
