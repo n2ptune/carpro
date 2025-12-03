@@ -24,11 +24,9 @@ RUN npm run build
 
 FROM base as runner
 
-ENV PORT=${PORT}
-
 ENV HOST=0.0.0.0
 
-EXPOSE ${PORT}
+EXPOSE 3000
 
 COPY --from=builder /app/.output /app/.output/
 

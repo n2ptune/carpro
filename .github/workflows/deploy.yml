@@ -26,4 +26,4 @@ jobs:
             docker build -t carpro-app .
             docker stop carpro-app || true
             docker rm carpro-app || true
-            docker run -d --name carpro-app -p 20500:20500 -v /data:/data/capro carpro-app
+            docker run -d --name carpro-app -p 20500:3000 -v /data:/data/carpro carpro-app
