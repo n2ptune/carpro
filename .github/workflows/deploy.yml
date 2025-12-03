@@ -19,6 +19,7 @@ jobs:
           host: ${{ secrets.SERVER_HOST }}
           username: ${{ secrets.SERVER_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: ${{ secrets.SERVER_PORT }}
           script: |
             echo "Test Deployment Script"
             # cd /path/to/your/project  # 서버에서 프로젝트가 위치한 절대 경로로 변경하세요
