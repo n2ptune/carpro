@@ -1,7 +1,6 @@
 # install
 
 ARG NODE_VERSION=22-alpine
-ARG PORT=20500
 
 FROM node:${NODE_VERSION} as base
 
@@ -25,12 +24,12 @@ RUN npm run build
 
 FROM base as runner
 
-ENV PORT=$PORT
+ENV PORT=${PORT}
+
+ENV HOST=0.0.0.0
 
 EXPOSE ${PORT}
 
-COPY --from=builder /app/package.json ./
-
 COPY --from=builder /app/.output /app/.output/
 
-CMD ["npm", "start"]
+CMD ["node", "/app/.output/server/index.mjs"]

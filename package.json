@@ -8,8 +8,7 @@
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
-    "format": "prettier --write ./src/**/*",
-    "start": "cross-env PORT=20500 node .output/server/index.mjs"
+    "format": "prettier --write ./src/**/*"
   },
   "devDependencies": {
     "@nuxt/devtools": "latest",
